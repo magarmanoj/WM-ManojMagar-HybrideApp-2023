@@ -15,7 +15,8 @@
                 </ion-item>
             </ion-list>
         </ion-content>
-        <ion-button @click="close ">Close</ion-button>
+        <ion-button @click="closePopup">Close</ion-button>
+        <ion-backdrop @ionBackdropTap="closePopup"></ion-backdrop> <!-- Deze popup heeft een backdrop "function" die je hier gwn aan button kunt verbinden-->
     </ion-page>
 </template>
   

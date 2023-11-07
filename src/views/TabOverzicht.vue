@@ -57,13 +57,16 @@
             <ion-row>
               <ion-col>
                 <ion-item>
-                  <ion-input label="Naam" label-placement="stacked" placeholder="Naam project" v-model="projectNaam" required="true"></ion-input>
+                  <ion-input label="Naam" label-placement="stacked" placeholder="Naam project" v-model="projectNaam"
+                    required="true"></ion-input>
                 </ion-item>
                 <ion-item>
-                  <ion-input label="Code" label-placement="stacked" placeholder="code"  v-model="projectCode" required="true"></ion-input>
+                  <ion-input label="Code" label-placement="stacked" placeholder="code" v-model="projectCode"
+                    required="true"></ion-input>
                 </ion-item>
                 <ion-item>
-                  <ion-input label="Omschrijving" label-placement="stacked" placeholder="Omschrijving" v-model="projectOmschrijving" required="true"></ion-input>
+                  <ion-input label="Omschrijving" label-placement="stacked" placeholder="Omschrijving"
+                    v-model="projectOmschrijving" required="true"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -84,23 +87,23 @@
             <ion-row>
               <ion-col>
                 <ion-item>
-                  <ion-input label="Mederwerker_id" label-placement="stacked" placeholder="medewerker id" type="number"
+                  <ion-input label="Mederwerker_id" label-placement="stacked" placeholder="medewerker id" v-model="mdw_id" type="number"
                     required="true" @ion-blur="logProduct()"></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col>
                 <ion-item>
-                  <ion-input label="Project_id" label-placement="stacked" placeholder="priject id" type="number"
+                  <ion-input label="Project_id" label-placement="stacked" placeholder="priject id" v-model="pr_id" type="number"
                     required="true" @ion-blur="logProduct()"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
             <ion-row>
               <ion-col>
-                <ion-button @click="verzendProduct()">Toewijzen!</ion-button>
+                <ion-button @click="toewijzen()">Toewijzen!</ion-button>
               </ion-col>
               <ion-col>
-                <ion-button @click="verzendProduct()">Verwijderen!</ion-button>
+                <ion-button @click="verwijderen()">Verwijderen!</ion-button>
               </ion-col>
             </ion-row>
           </ion-col>
@@ -114,7 +117,7 @@
             <ion-button @click="toonProjecten()">Toon projecten lijst!</ion-button>
           </ion-col>
           <ion-col>
-            <ion-button @click="toonMedewerkers">Toon Medewerker Lijst</ion-button>
+            <ion-button @click="toonMedewerkers()">Toon Medewerker Lijst</ion-button>
           </ion-col>
         </ion-row>
 
@@ -125,19 +128,32 @@
 
 <script setup>
 import { ref, inject } from 'vue'
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonItem, IonInput, IonSelect, IonSelectOption, IonButton, modalController  } from '@ionic/vue';
-import TabelMedewerker from './viewsTabel/tabelMedewerker.vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonItem, IonInput, IonSelect, IonSelectOption, IonButton, modalController } from '@ionic/vue';
+import TabelMedewerker from './viewsTabel/TabelMedewerker.vue';
+import TabelProject from './viewsTabel/TabelProject.vue';
 
+// medewerkers toevoegen
 const medewerkerNaam = ref('');
 const medewerkerFamilienaam = ref('');
 const specialisatie = ref('');
 
+// projecten toevoegen
 const projectNaam = ref('');
 const projectCode = ref('');
 const projectOmschrijving = ref('');
 
+
+// projecten toewijzen aan een medewerkers of verwijderen.
+const mdw_id = ref('');
+const pr_id = ref('');
+
+
 const axios = inject('axios')
 const addMedewerker = () => {
+  if (medewerkerNaam.value.trim() == '' || medewerkerFamilienaam.value.trim() == '' || specialisatie.value.trim() == '') {
+    window.alert('Een of meerdere waardes zijn leeg!');
+    return;
+  }
   axios
     .post('https://manojmagar.be/RESTfulAPI/Taak1/api/WerkerProjectadd.php', {
       voornaam: medewerkerNaam.value,
@@ -157,6 +173,10 @@ const addMedewerker = () => {
 }
 
 const addProject = () => {
+  if (projectNaam.value.trim() == '' || projectCode.value.trim() == '' || projectOmschrijving.value.trim() == '') {
+    window.alert('Een of meerdere waardes zijn leeg!');
+    return;
+  }
   axios
     .post('https://manojmagar.be/RESTfulAPI/Taak1/api/Projectsadd.php', {
       naam: projectNaam.value,
@@ -175,6 +195,52 @@ const addProject = () => {
     })
 }
 
+const medewToewijzenAanProject = () => {
+  if (mdw_id.value == '' || pr_id.value == '') {
+    window.alert('Een of meerdere waardes zijn leeg!');
+    return;
+  }
+  axios
+    .post('https://manojmagar.be/RESTfulAPI/Taak1/api/ToewijzenMedeProject.php', {
+      medewerker_id: mdw_id.value,
+      project_id: pr_id.value
+    })
+    .then(response => {
+      console.log(response);
+      if (response.status !== 200) {
+        console.log(response.status);
+      } else {
+        mdw_id.value = '';
+        pr_id.value = '';
+      }
+    })
+}
+
+const verwijderenProjectMedewerker = () => {
+  if (mdw_id.value == '' || pr_id.value == '') {
+    window.alert('Een of meerdere waardes zijn leeg!');
+    return;
+  }
+  axios
+    .post('https://manojmagar.be/RESTfulAPI/Taak1/api/VerwijderMedeProject.php', {
+      medewerker_id: mdw_id.value,
+      project_id: pr_id.value
+    })
+    .then(response => {
+      console.log(response);
+      if (response.status !== 200) {
+        console.log(response.status);
+      } else {
+        mdw_id.value = '';
+        pr_id.value = '';
+      }
+    })
+}
+
+const verwijderen = () => {
+  verwijderenProjectMedewerker();
+}
+
 const verzendMedewerker = () => {
   addMedewerker();
 };
@@ -183,10 +249,20 @@ const verzendProduct = () => {
   addProject();
 };
 
+const toewijzen = () => {
+  medewToewijzenAanProject();
+}
 const toonMedewerkers = async () => {
   const modal = await modalController.create({
     component: TabelMedewerker,
-    cssClass: 'tabel-medewerker-modal',
+  });
+  await modal.present();
+};
+
+
+const toonProjecten = async () => {
+  const modal = await modalController.create({
+    component: TabelProject,
   });
   await modal.present();
 };
@@ -194,13 +270,6 @@ const toonMedewerkers = async () => {
 
 
 <style>
-.tabel-medewerker-modal {
-  max-width: 80%;
-  width: 90%;
-  height: 80%;
-  margin: auto;
-}
-
 ion-row {
   margin-bottom: 1em;
 }
@@ -233,5 +302,4 @@ ion-select-option {
 
 .ion-text-center {
   margin-bottom: 1em;
-}
-</style>
+}</style>

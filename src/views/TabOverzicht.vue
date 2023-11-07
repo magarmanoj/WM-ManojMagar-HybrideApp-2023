@@ -127,7 +127,7 @@
 </template>
 
 <script setup>
-import { ref, inject, callWithAsyncErrorHandling } from 'vue'
+import { ref, inject } from 'vue'
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonItem, IonInput, IonSelect, IonSelectOption, IonButton, modalController } from '@ionic/vue';
 import TabelMedewerker from './viewsTabel/TabelMedewerker.vue';
 import TabelProject from './viewsTabel/TabelProject.vue';

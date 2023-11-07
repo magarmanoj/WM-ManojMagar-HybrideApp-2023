@@ -114,11 +114,9 @@
             <ion-button @click="toonProjecten()">Toon projecten lijst!</ion-button>
           </ion-col>
           <ion-col>
-            <ion-button @click="toonMedewerkers()">Toon medewerker lijst!</ion-button>
+            <ion-button @click="toonMedewerkers">Toon Medewerker Lijst</ion-button>
           </ion-col>
         </ion-row>
-
-
 
       </ion-grid>
     </ion-content>
@@ -127,7 +125,8 @@
 
 <script setup>
 import { ref, inject } from 'vue'
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonItem, IonInput, IonSelect, IonSelectOption, IonButton } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonItem, IonInput, IonSelect, IonSelectOption, IonButton, modalController  } from '@ionic/vue';
+import TabelMedewerker from './viewsTabel/tabelMedewerker.vue';
 
 const medewerkerNaam = ref('');
 const medewerkerFamilienaam = ref('');
@@ -184,10 +183,24 @@ const verzendProduct = () => {
   addProject();
 };
 
+const toonMedewerkers = async () => {
+  const modal = await modalController.create({
+    component: TabelMedewerker,
+    cssClass: 'tabel-medewerker-modal',
+  });
+  await modal.present();
+};
 </script>
 
 
 <style>
+.tabel-medewerker-modal {
+  max-width: 80%;
+  width: 90%;
+  height: 80%;
+  margin: auto;
+}
+
 ion-row {
   margin-bottom: 1em;
 }

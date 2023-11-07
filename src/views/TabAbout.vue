@@ -52,7 +52,6 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardH
 </style>
 
 <style scoped>
-/* Style for ion-row and ion-col elements */
 ion-row {
   margin-bottom: 10px;
 }
@@ -62,12 +61,11 @@ ion-col {
   border: 1px solid #ccc;
 }
 
-/* Style for ion-button elements */
+
 ion-button {
   margin-right: 10px;
 }
 
-/* Style for ion-input elements */
 ion-input {
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -75,32 +73,26 @@ ion-input {
   margin-bottom: 10px;
 }
 
-/* Center the text in ion-col with class ion-text-center */
+
 .ion-text-center {
   text-align: center;
 }
 
-/* Style for labels */
 ion-label {
   font-weight: bold;
 }
 
-/* Style for ion-select elements */
 ion-select {
   width: 100%;
 }
 
-/* Style for ion-select-option elements */
 ion-select-option {
   font-weight: normal;
 }
 
-/* Style for ion-card elements */
 ion-card {
   border: 1px solid #ccc;
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
-
-/* Add more styles as needed */
 </style>

@@ -22,7 +22,7 @@
   
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton } from '@ionic/vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton, IonBackdrop } from '@ionic/vue';
 
 const medewerkers = ref([]);
 

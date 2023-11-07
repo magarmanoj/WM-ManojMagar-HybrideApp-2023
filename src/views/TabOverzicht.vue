@@ -88,13 +88,13 @@
               <ion-col>
                 <ion-item>
                   <ion-input label="Mederwerker_id" label-placement="stacked" placeholder="medewerker id" v-model="mdw_id" type="number"
-                    required="true" @ion-blur="logProduct()"></ion-input>
+                    required="true"></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col>
                 <ion-item>
                   <ion-input label="Project_id" label-placement="stacked" placeholder="priject id" v-model="pr_id" type="number"
-                    required="true" @ion-blur="logProduct()"></ion-input>
+                    required="true"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>

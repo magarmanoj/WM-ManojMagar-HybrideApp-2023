@@ -44,14 +44,12 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonGrid, IonRow, IonImg, IonCol, IonLabel } from '@ionic/vue';
 </script>
   
-<style>
-.photo {
-  width: 35em; 
-  height: 35em; 
-}
-</style>
-
 <style scoped>
+.photo {
+  width: 17em; 
+  height: 20em; 
+}
+
 ion-row {
   margin-bottom: 10px;
 }
@@ -60,7 +58,6 @@ ion-col {
   padding: 10px;
   border: 1px solid #ccc;
 }
-
 
 ion-button {
   margin-right: 10px;

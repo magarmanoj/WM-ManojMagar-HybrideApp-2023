@@ -127,7 +127,7 @@
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'
+import { ref, inject, callWithAsyncErrorHandling } from 'vue'
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonItem, IonInput, IonSelect, IonSelectOption, IonButton, modalController } from '@ionic/vue';
 import TabelMedewerker from './viewsTabel/TabelMedewerker.vue';
 import TabelProject from './viewsTabel/TabelProject.vue';
@@ -168,6 +168,7 @@ const addMedewerker = () => {
         medewerkerNaam.value = '';
         medewerkerFamilienaam.value = '';
         specialisatie.value = '';
+        window.alert('Medewerker toegevoegd.')
       }
     })
 }
@@ -186,11 +187,12 @@ const addProject = () => {
     .then(response => {
       console.log(response);
       if (response.status !== 200) {
-        console.log(response.status);
+        console.log(response.status);      
       } else {
         projectNaam.value = '';
         projectCode.value = '';
         projectOmschrijving.value = '';
+        window.alert('Project teogevoegd.')
       }
     })
 }
@@ -212,6 +214,7 @@ const medewToewijzenAanProject = () => {
       } else {
         mdw_id.value = '';
         pr_id.value = '';
+        window.alert('Medewerker aan een project toegewijzigd.')
       }
     })
 }
@@ -233,6 +236,7 @@ const verwijderenProjectMedewerker = () => {
       } else {
         mdw_id.value = '';
         pr_id.value = '';
+        window.alert('Verwijderen is gelukt.');
       }
     })
 }

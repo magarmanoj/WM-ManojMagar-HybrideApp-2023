@@ -237,10 +237,6 @@ const verwijderenProjectMedewerker = () => {
     })
 }
 
-const verwijderen = () => {
-  verwijderenProjectMedewerker();
-}
-
 const verzendMedewerker = () => {
   addMedewerker();
 };
@@ -252,6 +248,11 @@ const verzendProduct = () => {
 const toewijzen = () => {
   medewToewijzenAanProject();
 }
+
+const verwijderen = () => {
+  verwijderenProjectMedewerker();
+}
+
 const toonMedewerkers = async () => {
   const modal = await modalController.create({
     component: TabelMedewerker,

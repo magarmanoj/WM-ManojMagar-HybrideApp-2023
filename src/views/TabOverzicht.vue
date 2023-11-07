@@ -13,7 +13,7 @@
       </ion-header>
       <ion-grid>
 
-        <ion-row> <!-- Eerste rij -->
+        <ion-row class="row1"> <!-- Eerste rij -->
           <ion-col>
             <ion-row>
               <ion-col class="ion-text-center">Welke medewerker wil je toevoegen?</ion-col>
@@ -78,7 +78,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row> <!-- Tweede rij -->
+        <ion-row class="row2"> <!-- Tweede rij -->
           <ion-col>
             <ion-row>
               <ion-col class="ion-text-center">Medewerkers toewijzen aan een project en verwijderen van een
@@ -109,7 +109,7 @@
           </ion-col>
         </ion-row>
 
-        <ion-row> <!-- Derde rij -->
+        <ion-row class="row3"> <!-- Derde rij -->
           <ion-col>
             <ion-button @click="toonMedeProj()">Toon medewerker/project lijst!</ion-button>
           </ion-col>
@@ -279,6 +279,9 @@ ion-row {
   margin-bottom: 1em;
 }
 
+.row1, .row2, .row3 {
+  border: 1px solid rgb(217, 228, 62);
+}
 ion-col {
   padding: 1em;
 }
@@ -287,7 +290,7 @@ ion-button {
   margin-right: 1em;
   display: flex;
   justify-content: center;
-  --background: green;
+  --background: rgb(1, 103, 1);
 }
 
 

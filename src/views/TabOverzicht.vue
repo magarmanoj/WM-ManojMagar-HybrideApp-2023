@@ -108,19 +108,6 @@
             </ion-row>
           </ion-col>
         </ion-row>
-
-        <ion-row class="row3"> <!-- Derde rij -->
-          <ion-col>
-            <ion-button @click="toonMedeProj()">Toon medewerker/project lijst!</ion-button>
-          </ion-col>
-          <ion-col>
-            <ion-button @click="toonProjecten()">Toon projecten lijst!</ion-button>
-          </ion-col>
-          <ion-col>
-            <ion-button @click="toonMedewerkers()">Toon Medewerker Lijst</ion-button>
-          </ion-col>
-        </ion-row>
-
       </ion-grid>
     </ion-content>
   </ion-page>
@@ -128,9 +115,8 @@
 
 <script setup>
 import { ref, inject } from 'vue'
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonItem, IonInput, IonSelect, IonSelectOption, IonButton, modalController } from '@ionic/vue';
-import TabelMedewerker from './viewsTabel/TabelMedewerker.vue';
-import TabelProject from './viewsTabel/TabelProject.vue';
+import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonItem, IonInput, IonSelect, IonSelectOption, IonButton } from '@ionic/vue';
+
 
 // medewerkers toevoegen
 const medewerkerNaam = ref('');
@@ -257,20 +243,6 @@ const verwijderen = () => {
   verwijderenProjectMedewerker();
 }
 
-const toonMedewerkers = async () => {
-  const modal = await modalController.create({
-    component: TabelMedewerker,
-  });
-  await modal.present();
-};
-
-
-const toonProjecten = async () => {
-  const modal = await modalController.create({
-    component: TabelProject,
-  });
-  await modal.present();
-};
 </script>
 
 

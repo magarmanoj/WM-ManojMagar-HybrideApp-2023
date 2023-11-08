@@ -2,7 +2,7 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>About Us</ion-title>
+                <ion-title class="ion-text-center">About Us</ion-title>
             </ion-toolbar>
         </ion-header>
         <ion-content class="ion-padding">
@@ -73,6 +73,7 @@ ion-input {
 
 .ion-text-center {
   text-align: center;
+  margin-top: 1em;
 }
 
 ion-label {

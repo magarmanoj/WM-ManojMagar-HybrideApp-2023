@@ -19,6 +19,10 @@ const routes = [
         component: () => import('@/views/TabOverzicht.vue')
       },
       {
+        path: 'tabLijsten',
+        component: () => import('@/views/TabLijsten.vue')
+      },
+      {
         path: 'tabAbout',
         component: () => import('@/views/TabAbout.vue')
       }

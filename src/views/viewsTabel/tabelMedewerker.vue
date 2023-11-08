@@ -1,28 +1,19 @@
 <template>
-    <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>Medewerkers</ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content :fullscreen="true">
-            <ion-list>
-                <ion-item v-for="{ medewerker_id, voornaam, familienaam, specialisatie } in medewerkers"
-                    :key="medewerker_id">
-                    <ion-item slot="start">{{ voornaam }}</ion-item>
-                    <ion-label :title="medewerker_id">{{ familienaam }}</ion-label>
-                    <ion-item slot="end">{{ specialisatie }}</ion-item>
-                </ion-item>
-            </ion-list>
-        </ion-content>
-        <ion-button @click="closePopup">Close</ion-button>
-        <ion-backdrop @ionBackdropTap="closePopup"></ion-backdrop> <!-- Deze popup heeft een backdrop "function" die je hier gwn aan button kunt verbinden-->
-    </ion-page>
+    <ion-content :fullscreen="true">
+        <ion-list>
+            <ion-item v-for="{ medewerker_id, voornaam, familienaam, specialisatie } in medewerkers" :key="medewerker_id">
+                <ion-item slot="start">{{ voornaam }}</ion-item>
+                <ion-label :title="medewerker_id">{{ familienaam }}</ion-label>
+                <ion-item slot="end">{{ specialisatie }}</ion-item>
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </template>
+  
   
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton, IonBackdrop } from '@ionic/vue';
+import { IonContent, IonList, IonItem, IonLabel } from '@ionic/vue';
 
 const medewerkers = ref([]);
 

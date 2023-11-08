@@ -1,28 +1,18 @@
 <template>
-    <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>Projecets</ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content :fullscreen="true">
-            <ion-list>
-                <ion-item v-for="{ project_id, naam, code, beschrijving } in projects"
-                    :key="project_id">
-                    <ion-item slot="start">{{ naam }}</ion-item>
-                    <ion-label :title="project_id">{{ code }}</ion-label>
-                    <ion-item slot="end">{{ beschrijving }}</ion-item>
-                </ion-item>
-            </ion-list>
-        </ion-content>
-        <ion-button @click="closePopup">Close</ion-button>
-        <ion-backdrop @ionBackdropTap="closePopup"></ion-backdrop> <!-- Deze popup heeft een backdrop "function" die je hier gwn aan button kunt verbinden-->
-    </ion-page>
+    <ion-content :fullscreen="true">
+        <ion-list>
+            <ion-item v-for="{ project_id, naam, code, beschrijving } in projects" :key="project_id">
+                <ion-item slot="start">{{ naam }}</ion-item>
+                <ion-label :title="project_id">{{ code }}</ion-label>
+                <ion-item slot="end">{{ beschrijving }}</ion-item>
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </template>
   
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonList, IonItem, IonLabel, IonButton,IonBackdrop } from '@ionic/vue';
+import { IonContent, IonList, IonItem, IonLabel } from '@ionic/vue';
 
 const projects = ref([]);
 

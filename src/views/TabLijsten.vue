@@ -21,7 +21,7 @@
         <ion-content class="ion-padding">
             <TabelMedewerker v-if="toonMedewerkerLijst"></TabelMedewerker>
             <TabelProject v-if="toonProjectLijst"></TabelProject>
-            <TabelMedeProj v-if="toonMedeProj"></TabelMedeProj>
+            <TabelMedeProj v-if="toonMedeProjLijst"></TabelMedeProj>
         </ion-content>
     </ion-page>
 </template>

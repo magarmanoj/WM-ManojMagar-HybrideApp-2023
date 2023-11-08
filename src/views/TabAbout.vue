@@ -13,12 +13,12 @@
                 <ion-card-content>
                     <ion-grid class="about-section">
                         <ion-row>
-                            <ion-col>
+                            <ion-col class="aboutol">
                                 <ion-img
                                     src="https://avatars.githubusercontent.com/u/113712069?s=400&u=a54d56b1cbbabf8ef745b80d3f8cf7430af0b1e9&v=4"
                                     alt="Author's Photo" class="photo"></ion-img>
                             </ion-col>
-                            <ion-col>
+                            <ion-col class="aboutol">
                                 <ion-card-content>
                                     <ion-label color="primary">Over de auteur</ion-label>
                                     <p>
@@ -44,53 +44,6 @@
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonGrid, IonRow, IonImg, IonCol, IonLabel } from '@ionic/vue';
 </script>
   
-<style scoped>
-.photo {
-  width: 17em; 
-  height: 20em; 
-}
-
-ion-row {
-  margin-bottom: 10px;
-}
-
-ion-col {
-  padding: 10px;
-  border: 1px solid #ccc;
-}
-
-ion-button {
-  margin-right: 10px;
-}
-
-ion-input {
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  padding: 5px;
-  margin-bottom: 10px;
-}
-
-
-.ion-text-center {
-  text-align: center;
-  margin-top: 1em;
-}
-
-ion-label {
-  font-weight: bold;
-}
-
-ion-select {
-  width: 100%;
-}
-
-ion-select-option {
-  font-weight: normal;
-}
-
-ion-card {
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
+<style>
+@import '@/theme/styles.css';
 </style>

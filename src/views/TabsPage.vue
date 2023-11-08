@@ -14,7 +14,7 @@
         </ion-tab-button>
 
         <ion-tab-button tab="about" href="/tabs/tabAbout">
-          <ion-icon aria-hidden="true" :icon="listOutline" />
+          <ion-icon aria-hidden="true" :icon="informationCircle" />
           <ion-label>About</ion-label>
         </ion-tab-button>
 
@@ -25,6 +25,6 @@
 
 <script setup>
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { addCircle, listOutline } from 'ionicons/icons';
+import { addCircle, listOutline, informationCircle } from 'ionicons/icons';
 
 </script>

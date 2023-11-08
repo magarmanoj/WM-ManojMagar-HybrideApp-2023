@@ -1,10 +1,15 @@
 <template>
     <ion-content :fullscreen="true">
         <ion-list>
+            <ion-row class="header-row">
+                <ion-col>Voornaam</ion-col>
+                <ion-col>Familienaam</ion-col>
+                <ion-col>Specialisatie</ion-col>
+            </ion-row>
             <ion-item v-for="{ medewerker_id, voornaam, familienaam, specialisatie } in medewerkers" :key="medewerker_id">
-                <ion-item slot="start">{{ voornaam }}</ion-item>
-                <ion-label :title="medewerker_id">{{ familienaam }}</ion-label>
-                <ion-item slot="end">{{ specialisatie }}</ion-item>
+                <ion-label class="col">{{ voornaam }}</ion-label>
+                <ion-label class="col">{{ familienaam }}</ion-label>
+                <ion-label class="col">{{ specialisatie }}</ion-label>
             </ion-item>
         </ion-list>
     </ion-content>

@@ -245,41 +245,6 @@ const verwijderen = () => {
 
 </script>
 
-
 <style>
-ion-row {
-  margin-bottom: 1em;
-}
-
-.row1, .row2, .row3 {
-  border: 1px solid rgb(217, 228, 62);
-}
-ion-col {
-  padding: 1em;
-}
-
-ion-button {
-  margin-right: 1em;
-  display: flex;
-  justify-content: center;
-  --background: rgb(1, 103, 1);
-}
-
-
-ion-input {
-  margin-bottom: 1em;
-}
-
-ion-select {
-  width: 50%;
-  margin-bottom: 1em;
-
-}
-
-ion-select-option {
-  font-weight: normal;
-}
-
-.ion-text-center {
-  margin-bottom: 1em;
-}</style>
+@import '@/theme/styles.css';
+</style>

@@ -1,42 +1,33 @@
 <template>
-    <ion-page>
-        <ion-header>
-            <ion-toolbar>
-                <ion-title>Producten</ion-title>
-            </ion-toolbar>
-        </ion-header>
-        <ion-content :fullscreen="true">
-            <ion-header collapse="condense">
-                <ion-toolbar>
-                    <ion-title size="large">Tab 2</ion-title>
-                </ion-toolbar>
-            </ion-header>
-            <ion-popover>
-                <ion-content>
-                    <ion-list>
-                        <ion-item v-for="{ medewerker_id, voornaam, familienaam, specialisatie } in producten"
-                            :key="medewerker_id">
-                            <ion-item slot="start">€{{ voornaam }}</ion-item>
-                            <ion-label :title="medewerker_id">{{ familienaam }}</ion-label>
-                            <ion-item slot="end">{{ specialisatie }}</ion-item>
-                        </ion-item>
-                    </ion-list>
-                </ion-content>
-            </ion-popover>
-        </ion-content>
-    </ion-page>
+    <ion-content>
+        <ion-list>
+            <ion-row class="header-row">
+                <ion-col>Naam</ion-col>
+                <ion-col>Voornaam</ion-col>
+                <ion-col>Familienaam</ion-col>
+                <ion-col>Specialisatie</ion-col>
+            </ion-row>
+            <ion-item v-for="{ naam, voornaam, familienaam, specialisatie, medewerker_id } in medeProject"
+                :key="medewerker_id">
+                <ion-label class="col">{{ naam }}</ion-label>
+                <ion-label class="col">{{ voornaam }}</ion-label>
+                <ion-label class="col">{{ familienaam }}</ion-label>
+                <ion-label class="col">{{ specialisatie }}</ion-label>
+            </ion-item>
+        </ion-list>
+    </ion-content>
 </template>
   
 <script setup>
-import { ref, inject } from 'vue';
-import { IonPage, IonHeader, IonToolbar, IonTitle,IonPopover, IonContent, IonList, IonLabel, IonItem, onIonViewWillEnter } from '@ionic/vue';
+import { ref, onMounted, inject } from 'vue';
+import { IonContent, IonList, IonLabel, IonItem } from '@ionic/vue';
 
-const wedewerker = ref([]);
+const medeProject = ref([]);
 
 const axios = inject('axios')
 const getMedewerker = () => {
     axios
-        .post('https://manojmagar.be/RESTfulAPI/Taak1/api/Medewerkerget.php')
+        .post('https://manojmagar.be/RESTfulAPI/Taak1/api/WerkerProjectget.php')
         .then(response => {
             if (response.status !== 200) {
                 console.log(response.status);
@@ -46,14 +37,19 @@ const getMedewerker = () => {
                 return;
             }
             console.log(response.data);
-            wedewerker.value = [];
+            medeProject.value = [];
             for (let i = 0, end = response.data.data.length; i < end; i++) {
-                wedewerker.value.push(response.data.data[i]);
+                medeProject.value.push(response.data.data[i]);
             }
         });
 }
 
-onIonViewWillEnter(() => {
+onMounted(() => {
     getMedewerker();
 });
 </script>
+
+
+<style>
+@import '@/theme/styles.css';
+</style>

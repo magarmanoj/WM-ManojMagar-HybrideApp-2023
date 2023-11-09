@@ -15,7 +15,7 @@
                         <ion-row>
                             <ion-col class="aboutol">
                                 <ion-img
-                                    src="https://avatars.githubusercontent.com/u/113712069?s=400&u=a54d56b1cbbabf8ef745b80d3f8cf7430af0b1e9&v=4"
+                                    src="../../img/foto.jpg"
                                     alt="Author's Photo" class="photo"></ion-img>
                             </ion-col>
                             <ion-col class="aboutol">

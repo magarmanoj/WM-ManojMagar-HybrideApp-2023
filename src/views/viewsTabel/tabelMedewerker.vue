@@ -8,12 +8,13 @@
                 <ion-col>Button</ion-col>
             </ion-row>
             <ion-item v-for="{ medewerker_id, voornaam, familienaam, specialisatie } in medewerkers" :key="medewerker_id">
-                <ion-label class="lbrow">{{ voornaam }}</ion-label>
-                <ion-label class="lbrow">{{ familienaam }}</ion-label>
-                <ion-label class="lbrow">{{ specialisatie }}</ion-label>
+                <ion-label class="lbrow" :contenteditable="editAble">{{ voornaam }}</ion-label>
+                <ion-label class="lbrow" :contenteditable="editAble">{{ familienaam }}</ion-label>
+                <ion-label class="lbrow" :contenteditable="editAble">{{ specialisatie }}</ion-label>
                 <ion-col class="col">
-                    <ion-button class="btn">Edit</ion-button>
-                    <ion-button class="btn">Delete</ion-button>
+                    <ion-button v-if="!editAble" @click="btnEdit(medewerker_id)" class="btn">Edit</ion-button>
+                    <ion-button v-if="editAble" @click="btnSave(medewerker_id)" class="btn">Save</ion-button>
+                    <ion-button @click="btnDelete" class="btn">Delete</ion-button>
                 </ion-col>
             </ion-item>
         </ion-list>
@@ -25,9 +26,38 @@
 import { ref, onMounted, inject } from 'vue';
 import { IonContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonButton } from '@ionic/vue';
 
-const medewerkers = ref([]);
-
 const axios = inject('axios')
+const medewerkers = ref([]);
+const editAble = ref(false);
+
+const btnEdit = (medewerker_id) => {
+    editAble.value = true;
+    medewerkers.value.forEach(medewerker => {
+        medewerker.editAble = medewerker.medewerker_id == medewerker_id;
+    })
+}
+
+
+const btnSave = () => {
+    axios
+        .post('https://manojmagar.be/RESTfulAPI/Taak1/api/UpdateMedewerker.php',)
+        .then(response => {
+            if (response.status !== 200) {
+                console.log(response.status);
+            }
+            if (!response.data.data) {
+                console.log('response.data.data is not ok');
+                return;
+            }
+            console.log(response.data);
+            medewerkers.value = [];
+            for (let i = 0, end = response.data.data.length; i < end; i++) {
+                medewerkers.value.push(response.data.data[i]);
+            }
+        });
+}
+
+
 const getMedewerker = () => {
     axios
         .post('https://manojmagar.be/RESTfulAPI/Taak1/api/Medewerkerget.php')

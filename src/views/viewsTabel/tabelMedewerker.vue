@@ -14,9 +14,14 @@
                 <ion-col class="col">
                     <ion-button v-if="!editAble" @click="btnEdit(medewerker_id)" class="btn">Edit</ion-button>
                     <ion-button v-if="editAble" @click="btnSave(medewerker_id)" class="btn">Save</ion-button>
-                    <ion-button @click="btnDelete" class="btn">Delete</ion-button>
+                    <ion-button @click="btnDelete(true, medewerker_id)" class="btn">Delete</ion-button>
                 </ion-col>
             </ion-item>
+            <ion-modal :is-open="isOpen">
+                <p>Ben je zeker dat je dit wil verwijderen?</p>
+                <ion-button @click="btnOk(toDeleteId)">OK</ion-button>
+                <ion-button @click="btnCancel(false)">Cancel</ion-button>
+            </ion-modal>
         </ion-list>
     </ion-content>
 </template>
@@ -24,11 +29,49 @@
   
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import { IonContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonButton } from '@ionic/vue';
+import { IonContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonButton, IonModal } from '@ionic/vue';
 
 const axios = inject('axios')
 const medewerkers = ref([]);
 const editAble = ref(false);
+const isOpen = ref(false);
+const toDeleteId = ref(null);
+
+const btnDelete = (open, medewerker_id) => {
+    if (open) {
+        isOpen.value = true;
+        toDeleteId.value = medewerker_id;
+    } else {
+        isOpen.value = false;
+    }
+}
+
+const btnCancel = () => {
+    isOpen.value = false;
+}
+
+const btnOk = (toDeleteId) => {
+    axios
+        .post('https://manojmagar.be/RESTfulAPI/Taak1/api/DeleteMedewerker.php', {
+            medewerker_id: toDeleteId
+        })
+        .then(response => {
+            if (response.status !== 200) {
+                console.log(response.status);
+            }
+            if (!response.data.data) {
+                console.log('response.data.data is not ok');
+                return;
+            }
+            console.log(response.data);
+            isOpen.value = false;
+            getMedewerker();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            window.alert('Je kan de medewerker niet verwijderen omdat er een serverfout is opgetreden!');
+        });
+}
 
 const btnEdit = (medewerker_id) => {
     editAble.value = true;
@@ -38,6 +81,7 @@ const btnEdit = (medewerker_id) => {
 }
 
 
+// werk nog niet 
 const btnSave = () => {
     axios
         .post('https://manojmagar.be/RESTfulAPI/Taak1/api/UpdateMedewerker.php',)
@@ -55,8 +99,8 @@ const btnSave = () => {
                 medewerkers.value.push(response.data.data[i]);
             }
         });
+    editAble.value = false;
 }
-
 
 const getMedewerker = () => {
     axios
@@ -76,10 +120,10 @@ const getMedewerker = () => {
             }
         });
 }
+
 onMounted(() => {
     getMedewerker();
 });
-
 </script>
 
 <style>

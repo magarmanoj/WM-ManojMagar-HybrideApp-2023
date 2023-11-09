@@ -5,11 +5,16 @@
                 <ion-col>Voornaam</ion-col>
                 <ion-col>Familienaam</ion-col>
                 <ion-col>Specialisatie</ion-col>
+                <ion-col>Button</ion-col>
             </ion-row>
             <ion-item v-for="{ medewerker_id, voornaam, familienaam, specialisatie } in medewerkers" :key="medewerker_id">
-                <ion-label class="col">{{ voornaam }}</ion-label>
-                <ion-label class="col">{{ familienaam }}</ion-label>
-                <ion-label class="col">{{ specialisatie }}</ion-label>
+                <ion-label class="lbrow">{{ voornaam }}</ion-label>
+                <ion-label class="lbrow">{{ familienaam }}</ion-label>
+                <ion-label class="lbrow">{{ specialisatie }}</ion-label>
+                <ion-col class="col">
+                    <ion-button class="btn">Edit</ion-button>
+                    <ion-button class="btn">Delete</ion-button>
+                </ion-col>
             </ion-item>
         </ion-list>
     </ion-content>
@@ -18,7 +23,7 @@
   
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import { IonContent, IonList, IonItem, IonLabel } from '@ionic/vue';
+import { IonContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonButton } from '@ionic/vue';
 
 const medewerkers = ref([]);
 
@@ -46,3 +51,7 @@ onMounted(() => {
 });
 
 </script>
+
+<style>
+@import '@/theme/styles.css';
+</style>

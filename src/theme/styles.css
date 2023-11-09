@@ -22,6 +22,7 @@ ion-input {
   margin-bottom: 1em;
 }
 
+
 ion-select {
   width: 50%;
   margin-bottom: 1em;
@@ -54,11 +55,22 @@ ion-select-option {
     font-weight: bold;
 }
 
-.col {
+.lbrow {
     flex: 1;
     text-align: center;
     min-width: 0;
     width: 25%;
+}
+
+
+/** Medewerkers */
+.btn {
+  width: 25%;
+}
+
+.col {
+  display: flex;
+  justify-content: space-around;
 }
 
 

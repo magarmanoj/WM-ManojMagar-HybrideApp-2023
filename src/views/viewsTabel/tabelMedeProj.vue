@@ -9,10 +9,10 @@
             </ion-row>
             <ion-item v-for="{ naam, voornaam, familienaam, specialisatie, medewerker_id } in medeProject"
                 :key="medewerker_id">
-                <ion-label class="col">{{ naam }}</ion-label>
-                <ion-label class="col">{{ voornaam }}</ion-label>
-                <ion-label class="col">{{ familienaam }}</ion-label>
-                <ion-label class="col">{{ specialisatie }}</ion-label>
+                <ion-label class="lbrow">{{ naam }}</ion-label>
+                <ion-label class="lbrow">{{ voornaam }}</ion-label>
+                <ion-label class="lbrow">{{ familienaam }}</ion-label>
+                <ion-label class="lbrow">{{ specialisatie }}</ion-label>
             </ion-item>
         </ion-list>
     </ion-content>

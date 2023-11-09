@@ -7,9 +7,9 @@
                 <ion-col>Omschrijving</ion-col>
             </ion-row>
             <ion-item v-for="{ project_id, naam, code, beschrijving } in projects" :key="project_id">
-                <ion-label class="col">{{ naam }}</ion-label>
-                <ion-label class="col">{{ code }}</ion-label>
-                <ion-label class="col">{{ beschrijving }}</ion-label>
+                <ion-label class="lbrow">{{ naam }}</ion-label>
+                <ion-label class="lbrow">{{ code }}</ion-label>
+                <ion-label class="lbrow">{{ beschrijving }}</ion-label>
             </ion-item>
         </ion-list>
     </ion-content>

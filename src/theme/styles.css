@@ -6,6 +6,7 @@ ion-row {
 .row1, .row2, .row3 {
   border: 1px solid rgb(217, 228, 62);
 }
+
 ion-col {
   padding: 1em;
 }
@@ -39,30 +40,30 @@ ion-select-option {
 }
 
 .btnLijst {
-    border: 1px solid black;
-    display: flex;
-    justify-content: center;
-    padding: 1em;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  padding: 1em;
 }
 
 
 
 /** Medewerker Project */
 .header-row {
-    display: flex;
-    justify-content: center;
-    background-color: rgb(1, 103, 1);
-    padding: 10px;
-    text-align: center;
-    font-weight: bold;
-    color: white;
+  display: flex;
+  justify-content: center;
+  background-color: rgb(1, 103, 1);
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: white;
 }
 
 .lbrow {
-    flex: 1;
-    text-align: center;
-    min-width: 0;
-    width: 25%;
+  flex: 1;
+  text-align: center;
+  min-width: 0;
+  width: 25%;
 }
 
 
@@ -83,34 +84,35 @@ ion-icon {
 
 /** About us */
 .photo {
-  width: 17em; 
-  height: 20em; 
+  width: 17em;
+  height: 20em;
 }
 
 .aboutol {
-    padding: 10px;
-    border: 1px solid #ccc;
-  }
- 
-  ion-card {
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  border: 1px solid #ccc;
+}
+
+ion-card {
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 360px) {
+  .header-row {
+    font-size: small;
   }
 
-  @media (max-width: 360px) {
-    .header-row {
-      font-size: small;
-    }
-    .item {
-      font-size: small;
-    }
-    .btn {
-      width: 50%;
-    }
-
-    ion-icon {
-      font-size: 1.2em;
-    }
-
+  .item {
+    font-size: small;
   }
+
+  .btn {
+    width: 50%;
+  }
+
+  ion-icon {
+    font-size: 1.2em;
+  }
+}

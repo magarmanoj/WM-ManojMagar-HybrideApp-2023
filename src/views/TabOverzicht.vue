@@ -93,7 +93,7 @@
               </ion-col>
               <ion-col>
                 <ion-item>
-                  <ion-input label="Project_id" label-placement="stacked" placeholder="priject id" v-model="pr_id"
+                  <ion-input label="Project_id" label-placement="stacked" placeholder="project id" v-model="pr_id"
                     type="number" required="true"></ion-input>
                 </ion-item>
               </ion-col>

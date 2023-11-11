@@ -51,10 +51,11 @@ ion-select-option {
 .header-row {
     display: flex;
     justify-content: center;
-    background-color: #f0f0f0;
+    background-color: rgb(1, 103, 1);
     padding: 10px;
     text-align: center;
     font-weight: bold;
+    color: white;
 }
 
 .lbrow {
@@ -67,7 +68,7 @@ ion-select-option {
 
 /** Medewerkers */
 .btn {
-  width: 35%;
+  width: 50%;
 }
 
 ion-icon {
@@ -76,7 +77,7 @@ ion-icon {
 
 .col {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-evenly;
 }
 
 
@@ -95,4 +96,21 @@ ion-icon {
     border: 1px solid #ccc;
     border-radius: 5px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  @media (max-width: 360px) {
+    .header-row {
+      font-size: small;
+    }
+    .item {
+      font-size: small;
+    }
+    .btn {
+      width: 50%;
+    }
+
+    ion-icon {
+      font-size: 1.2em;
+    }
+
   }

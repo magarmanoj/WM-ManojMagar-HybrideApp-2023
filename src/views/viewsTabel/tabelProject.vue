@@ -7,28 +7,25 @@
                 <ion-col>Omschrijving</ion-col>
                 <ion-col>Button</ion-col>
             </ion-row>
-            <ion-row>
-                <ion-item v-for="{ project_id, naam, code, beschrijving } in projects" :key="project_id">
-                    <ion-input class="lbrow" :value="naam" :readonly="editAble"
-                        @ionInput="onInputChange('naam', project_id, $event)"></ion-input>
-                    <!--readonly zo dat je niet direct op input field kan schrijven-->
-                    <ion-input class="lbrow" :value="code" :readonly="editAble"
-                        @ionInput="onInputChange('code', project_id, $event)"></ion-input>
-                    <ion-input class="lbrow" :value="beschrijving" :readonly="editAble"
-                        @ionInput="onInputChange('beschrijving', project_id, $event)"></ion-input>
-                    <ion-col class="col">
-                        <ion-button v-if="editAble" @click="btnEdit(project_id)" class="btn">
-                            <ion-icon :icon="create" />
-                        </ion-button>
-                        <ion-button v-if="!editAble" @click="btnSave(project_id)" class="btn">
-                            <ion-icon :icon="save" />
-                        </ion-button>
-                        <ion-button @click="btnDelete(true, project_id)" class="btn">
-                            <ion-icon :icon="trash" />
-                        </ion-button>
-                    </ion-col>
-                </ion-item>
-            </ion-row>
+            <ion-item class="item" v-for="{ project_id, naam, code, beschrijving } in projects" :key="project_id">
+                <ion-input class="lbrow" :value="naam" :readonly="editAble" 
+                    @ionInput="onInputChange('naam', project_id, $event)"></ion-input> <!--readonly zo dat je niet direct op input field kan schrijven-->
+                <ion-input class="lbrow" :value="code" :readonly="editAble"
+                    @ionInput="onInputChange('code', project_id, $event)"></ion-input>
+                <ion-input class="lbrow" :value="beschrijving" :readonly="editAble"
+                    @ionInput="onInputChange('beschrijving', project_id, $event)"></ion-input>
+                <ion-col class="col">
+                    <ion-button v-if="editAble" @click="btnEdit()" class="btn">
+                        <ion-icon :icon="create" />
+                    </ion-button>
+                    <ion-button v-if="!editAble" @click="btnSave(project_id)" class="btn">
+                        <ion-icon :icon="save" />
+                    </ion-button>
+                    <ion-button @click="btnDelete(true, project_id)" class="btn">
+                        <ion-icon :icon="trash" />
+                    </ion-button>
+                </ion-col>
+            </ion-item>
             <ion-modal :is-open="isOpen">
                 <p>Ben je zeker dat je dit wil verwijderen?</p>
                 <ion-button @click="btnOk(toDeleteId)">OK</ion-button>
@@ -61,6 +58,7 @@ const onInputChange = (field, project_id, event) => {
 
 const btnEdit = () => {
     editAble.value = false;
+
 }
 
 const btnSave = (project_id) => {

@@ -45,6 +45,8 @@ ion-select-option {
     padding: 1em;
 }
 
+
+
 /** Medewerker Project */
 .header-row {
     display: flex;
@@ -65,7 +67,11 @@ ion-select-option {
 
 /** Medewerkers */
 .btn {
-  width: 25%;
+  width: 35%;
+}
+
+ion-icon {
+  font-size: 2em;
 }
 
 .col {

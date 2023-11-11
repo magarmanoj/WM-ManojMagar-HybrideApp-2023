@@ -7,16 +7,28 @@
                 <ion-col>Omschrijving</ion-col>
                 <ion-col>Button</ion-col>
             </ion-row>
-            <ion-item v-for="{ project_id, naam, code, beschrijving } in projects" :key="project_id">
-                <ion-label class="lbrow" :contenteditable="editAble">{{ naam }}</ion-label>
-                <ion-label class="lbrow" :contenteditable="editAble">{{ code }}</ion-label>
-                <ion-label class="lbrow" :contenteditable="editAble">{{ beschrijving }}</ion-label>
-                <ion-col class="col">
-                    <ion-button v-if="!editAble" @click="btnEdit(project_id)" class="btn">Edit</ion-button>
-                    <ion-button v-if="editAble" @click="btnSave(project_id)" class="btn">Save</ion-button>
-                    <ion-button @click="btnDelete(true, project_id)" class="btn">Delete</ion-button>
-                </ion-col>
-            </ion-item>
+            <ion-row>
+                <ion-item v-for="{ project_id, naam, code, beschrijving } in projects" :key="project_id">
+                    <ion-input class="lbrow" :value="naam" :readonly="editAble"
+                        @ionInput="onInputChange('naam', project_id, $event)"></ion-input>
+                    <!--readonly zo dat je niet direct op input field kan schrijven-->
+                    <ion-input class="lbrow" :value="code" :readonly="editAble"
+                        @ionInput="onInputChange('code', project_id, $event)"></ion-input>
+                    <ion-input class="lbrow" :value="beschrijving" :readonly="editAble"
+                        @ionInput="onInputChange('beschrijving', project_id, $event)"></ion-input>
+                    <ion-col class="col">
+                        <ion-button v-if="editAble" @click="btnEdit(project_id)" class="btn">
+                            <ion-icon :icon="create" />
+                        </ion-button>
+                        <ion-button v-if="!editAble" @click="btnSave(project_id)" class="btn">
+                            <ion-icon :icon="save" />
+                        </ion-button>
+                        <ion-button @click="btnDelete(true, project_id)" class="btn">
+                            <ion-icon :icon="trash" />
+                        </ion-button>
+                    </ion-col>
+                </ion-item>
+            </ion-row>
             <ion-modal :is-open="isOpen">
                 <p>Ben je zeker dat je dit wil verwijderen?</p>
                 <ion-button @click="btnOk(toDeleteId)">OK</ion-button>
@@ -28,15 +40,54 @@
   
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import { IonContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonButton, IonModal } from '@ionic/vue';
+import { IonContent, IonList, IonItem, IonInput, IonRow, IonCol, IonButton, IonModal, IonIcon } from '@ionic/vue';
+import { trash, save, create } from 'ionicons/icons';
 
 const projects = ref([]);
 
 const axios = inject('axios')
 
-const editAble = ref(false);
+const editAble = ref(true);
 const isOpen = ref(false);
 const toDeleteId = ref(null);
+
+
+// https://stackoverflow.com/questions/63343859/whats-the-difference-between-input-and-change-in-vue-input-type-file
+
+const onInputChange = (field, project_id, event) => {
+    const updatedInput = projects.value.find(project => project.project_id == project_id); // kijkt de value van de project_id (naam, code, beschrijving en update het)
+    updatedInput[field] = event.detail.value;
+};
+
+const btnEdit = () => {
+    editAble.value = false;
+}
+
+const btnSave = (project_id) => {
+    const { naam, code, beschrijving } = projects.value.find(project => project.project_id == project_id);
+    axios
+        .post('https://manojmagar.be/RESTfulAPI/Taak1/api/UpdateProject.php', {
+            project_id: project_id,
+            naam: naam,
+            code: code,
+            beschrijving: beschrijving
+        })
+        .then(response => {
+            if (response.status !== 200) {
+                console.log(response.status);
+            }
+            if (!response.data.data) {
+                console.log('response.data.data is not ok');
+                window.alert('je hebt niets verandert.')
+                editAble.value = true;
+                return;
+            }
+            window.alert("Het opslagen was gelukt!");
+            console.log(response.data);
+            editAble.value = true;
+            getProjects();
+        });
+}
 
 const btnDelete = (open, project_id) => {
     if (open) {
@@ -74,35 +125,6 @@ const btnOk = (toDeleteId) => {
         });
 }
 
-const btnEdit = (project_id) => {
-    editAble.value = true;
-    projects.value.forEach(project => {
-        project.editAble = project.project_id == project_id;
-    })
-}
-
-
-// werk nog niet 
-const btnSave = () => {
-    axios
-        .post('https://manojmagar.be/RESTfulAPI/Taak1/api/UpdateProject.php',)
-        .then(response => {
-            if (response.status !== 200) {
-                console.log(response.status);
-            }
-            if (!response.data.data) {
-                console.log('response.data.data is not ok');
-                return;
-            }
-            console.log(response.data);
-            projects.value = [];
-            for (let i = 0, end = response.data.data.length; i < end; i++) {
-                projects.value.push(response.data.data[i]);
-            }
-        });
-    editAble.value = false;
-}
-
 const getProjects = () => {
     axios
         .post('https://manojmagar.be/RESTfulAPI/Taak1/api/Projectsget.php')
@@ -115,14 +137,12 @@ const getProjects = () => {
                 return;
             }
             console.log(response.data);
-            projects.value = [];
-            for (let i = 0, end = response.data.data.length; i < end; i++) {
-                projects.value.push(response.data.data[i]);
-            }
+            projects.value = response.data.data;
         });
 }
+
 onMounted(() => {
     getProjects();
 });
-
 </script>
+  

@@ -87,14 +87,14 @@
             <ion-row>
               <ion-col>
                 <ion-item>
-                  <ion-input label="Mederwerker_id" label-placement="stacked" placeholder="medewerker id" v-model="mdw_id" type="number"
-                    required="true"></ion-input>
+                  <ion-input label="Mederwerker_id" label-placement="stacked" placeholder="medewerker id" v-model="mdw_id"
+                    type="number" required="true"></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col>
                 <ion-item>
-                  <ion-input label="Project_id" label-placement="stacked" placeholder="priject id" v-model="pr_id" type="number"
-                    required="true"></ion-input>
+                  <ion-input label="Project_id" label-placement="stacked" placeholder="priject id" v-model="pr_id"
+                    type="number" required="true"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -173,7 +173,7 @@ const addProject = () => {
     .then(response => {
       console.log(response);
       if (response.status !== 200) {
-        console.log(response.status);      
+        console.log(response.status);
       } else {
         projectNaam.value = '';
         projectCode.value = '';

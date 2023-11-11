@@ -8,13 +8,22 @@
                 <ion-col>Button</ion-col>
             </ion-row>
             <ion-item v-for="{ medewerker_id, voornaam, familienaam, specialisatie } in medewerkers" :key="medewerker_id">
-                <ion-label class="lbrow" :contenteditable="editAble">{{ voornaam }}</ion-label>
-                <ion-label class="lbrow" :contenteditable="editAble">{{ familienaam }}</ion-label>
-                <ion-label class="lbrow" :contenteditable="editAble">{{ specialisatie }}</ion-label>
+                <ion-input class="lbrow" :value="voornaam" :readonly="editAble"
+                    @ionInput="onInputChange('voornaam', medewerker_id, $event)"></ion-input>
+                <ion-input class="lbrow" :value="familienaam" :readonly="editAble"
+                    @ionInput="onInputChange('familienaam', medewerker_id, $event)"></ion-input>
+                <ion-input class="lbrow" :value="specialisatie" :readonly="editAble"
+                    @ionInput="onInputChange('specialisatie', medewerker_id, $event)"></ion-input>
                 <ion-col class="col">
-                    <ion-button v-if="!editAble" @click="btnEdit(medewerker_id)" class="btn">Edit</ion-button>
-                    <ion-button v-if="editAble" @click="btnSave(medewerker_id)" class="btn">Save</ion-button>
-                    <ion-button @click="btnDelete(true, medewerker_id)" class="btn">Delete</ion-button>
+                    <ion-button v-if="editAble" @click="btnEdit()" class="btn">
+                        <ion-icon :icon="create" />
+                    </ion-button>
+                    <ion-button v-if="!editAble" @click="btnSave(medewerker_id)" class="btn">
+                        <ion-icon :icon="save" />
+                    </ion-button>
+                    <ion-button @click="btnDelete(true, medewerker_id)" class="btn">
+                        <ion-icon :icon="trash" />
+                    </ion-button>
                 </ion-col>
             </ion-item>
             <ion-modal :is-open="isOpen">
@@ -29,13 +38,59 @@
   
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import { IonContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonButton, IonModal } from '@ionic/vue';
+import { IonContent, IonList, IonItem, IonInput, IonRow, IonCol, IonButton, IonModal, IonIcon } from '@ionic/vue';
+import { trash, save, create } from 'ionicons/icons';
+
 
 const axios = inject('axios')
 const medewerkers = ref([]);
-const editAble = ref(false);
+const editAble = ref(true);
 const isOpen = ref(false);
 const toDeleteId = ref(null);
+
+
+// https://stackoverflow.com/questions/63343859/whats-the-difference-between-input-and-change-in-vue-input-type-file
+
+const onInputChange = (field, medewerker_id, event) => {
+    const updatedInput = medewerkers.value.find(mede => mede.medewerker_id == medewerker_id);
+    updatedInput[field] = event.detail.value;
+}
+
+const btnEdit = () => {
+    editAble.value = false;
+}
+
+// werk nog niet 
+const btnSave = (medewerker_id) => {
+    const { voornaam, familienaam, specialisatie } = medewerkers.value.find(mede => mede.medewerker_id == medewerker_id);
+    axios
+        .post('https://manojmagar.be/RESTfulAPI/Taak1/api/UpdateMedewerker.php', {
+            medewerker_id: medewerker_id,
+            voornaam: voornaam,
+            familienaam: familienaam,
+            specialisatie: specialisatie
+        })
+        .then(response => {
+            if (response.status !== 200) {
+                console.log(response.status);
+            }
+            if (!response.data.data) {
+                console.log('response.data.data is not ok');
+                window.alert('je hebt niets verandert.')
+                editAble.value = true;
+                return;
+            }
+            console.log(response.data);
+            medewerkers.value = [];
+            for (let i = 0, end = response.data.data.length; i < end; i++) {
+                medewerkers.value.push(response.data.data[i]);
+            }
+            window.alert("Het opslagen was gelukt!");
+            editAble.value = true;
+            getMedewerker();
+        });
+
+}
 
 const btnDelete = (open, medewerker_id) => {
     if (open) {
@@ -73,34 +128,8 @@ const btnOk = (toDeleteId) => {
         });
 }
 
-const btnEdit = (medewerker_id) => {
-    editAble.value = true;
-    medewerkers.value.forEach(medewerker => {
-        medewerker.editAble = medewerker.medewerker_id == medewerker_id;
-    })
-}
 
 
-// werk nog niet 
-const btnSave = () => {
-    axios
-        .post('https://manojmagar.be/RESTfulAPI/Taak1/api/UpdateMedewerker.php',)
-        .then(response => {
-            if (response.status !== 200) {
-                console.log(response.status);
-            }
-            if (!response.data.data) {
-                console.log('response.data.data is not ok');
-                return;
-            }
-            console.log(response.data);
-            medewerkers.value = [];
-            for (let i = 0, end = response.data.data.length; i < end; i++) {
-                medewerkers.value.push(response.data.data[i]);
-            }
-        });
-    editAble.value = false;
-}
 
 const getMedewerker = () => {
     axios
@@ -126,6 +155,4 @@ onMounted(() => {
 });
 </script>
 
-<style>
-@import '@/theme/styles.css';
-</style>
+<style>@import '@/theme/styles.css';</style>

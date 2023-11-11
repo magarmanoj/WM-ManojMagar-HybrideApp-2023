@@ -15,7 +15,8 @@
                 <ion-label class="lbrow">{{ familienaam }}</ion-label>
                 <ion-label class="lbrow">{{ specialisatie }}</ion-label>
                 <ion-col class="col">
-                    <ion-button @click="btnDelete(true, medewerker_id, project_id)" class="btn">Delete</ion-button>
+                    <ion-button @click="btnDelete(true, medewerker_id, project_id)" class="btn">
+                        <ion-icon :icon="trash"/></ion-button>
                 </ion-col>
             </ion-item>
             <ion-modal :is-open="isOpen">
@@ -29,7 +30,9 @@
   
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import { IonContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonButton, IonModal } from '@ionic/vue';
+import { IonContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonButton, IonModal, IonIcon } from '@ionic/vue';
+import { trash } from 'ionicons/icons';
+
 
 const medeProject = ref([]);
 

@@ -183,6 +183,7 @@ const addProject = () => {
     })
 }
 
+// combobox: show all the medewerkers en voor project alle de project 
 const medewToewijzenAanProject = () => {
   if (mdw_id.value == '' || pr_id.value == '') {
     window.alert('Een of meerdere waardes zijn leeg!');

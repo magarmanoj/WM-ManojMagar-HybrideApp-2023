@@ -8,11 +8,11 @@
                 <ion-col class="lbrow">Button</ion-col>
             </ion-row>
             <ion-row class="item" v-for="{ medewerker_id, voornaam, familienaam, specialisatie } in medewerkers" :key="medewerker_id">
-                <ion-input class="lbrow" :value="voornaam" :readonly="editAble"
+                <ion-input class="lbrow" :value="voornaam" :readonly="editAble" :class="{ 'editable': !editAble }"
                     @ionInput="onInputChange('voornaam', medewerker_id, $event)"></ion-input>
-                <ion-input class="lbrow" :value="familienaam" :readonly="editAble"
+                <ion-input class="lbrow" :value="familienaam" :readonly="editAble" :class="{ 'editable': !editAble }"
                     @ionInput="onInputChange('familienaam', medewerker_id, $event)"></ion-input>
-                <ion-input class="lbrow" :value="specialisatie" :readonly="editAble"
+                <ion-input class="lbrow" :value="specialisatie" :readonly="editAble" :class="{ 'editable': !editAble }"
                     @ionInput="onInputChange('specialisatie', medewerker_id, $event)"></ion-input>
                 <ion-col class="lbrow">
                     <ion-button v-if="editAble" @click="btnEdit()" class="btn">

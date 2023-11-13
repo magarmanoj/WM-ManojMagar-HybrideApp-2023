@@ -8,12 +8,13 @@
                 <ion-col class="lbrow">Button</ion-col>
             </ion-row>
             <ion-row class="item" v-for="{ project_id, naam, code, beschrijving } in projects" :key="project_id">
-                <ion-input class="lbrow" :value="naam" :readonly="editAble"
+                <!-- :class van chatgpt maak een klas waar je conditie kan zetten die je dan opmak kan geven-->
+                <ion-input class="lbrow" :value="naam" :readonly="editAble" :class="{ 'editable': !editAble }"
                     @ionInput="onInputChange('naam', project_id, $event)"></ion-input>
                 <!--readonly zo dat je niet direct op input field kan schrijven-->
-                <ion-input class="lbrow" :value="code" :readonly="editAble"
+                <ion-input class="lbrow" :value="code" :readonly="editAble" :class="{ 'editable': !editAble }"
                     @ionInput="onInputChange('code', project_id, $event)"></ion-input>
-                <ion-input class="lbrow" :value="beschrijving" :readonly="editAble"
+                <ion-input class="lbrow" :value="beschrijving" :readonly="editAble" :class="{ 'editable': !editAble }"
                     @ionInput="onInputChange('beschrijving', project_id, $event)"></ion-input>
                 <ion-col class="lbrow">
                     <ion-button v-if="editAble" @click="btnEdit()" class="btn">

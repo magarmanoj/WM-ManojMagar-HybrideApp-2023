@@ -62,6 +62,10 @@ ion-select-option {
   font-size: 1.5em;
 }
 
+.editable {
+  background-color: grey;
+}
+
 
 
 /** About us */

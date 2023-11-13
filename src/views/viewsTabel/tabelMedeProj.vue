@@ -15,7 +15,7 @@
                 <ion-input class="lbrow" :value="familienaam" :readonly="editAble"></ion-input>
                 <ion-input class="lbrow" :value="specialisatie" :readonly="editAble"></ion-input>
                 <ion-col class="lbrow">
-                    <ion-button @click="btnDelete(true, medewerker_id, project_id)" class="btn">
+                    <ion-button @click="btnDelete(true, medewerker_id, project_id)">
                         <ion-icon class="icon" :icon="trash"/></ion-button>
                 </ion-col>
             </ion-row>

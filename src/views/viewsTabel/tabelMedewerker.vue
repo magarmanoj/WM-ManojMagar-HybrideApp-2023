@@ -15,13 +15,13 @@
                 <ion-input class="lbrow" :value="specialisatie" :readonly="editAble" :class="{ 'editable': !editAble }"
                     @ionInput="onInputChange('specialisatie', medewerker_id, $event)"></ion-input>
                 <ion-col class="lbrow">
-                    <ion-button v-if="editAble" @click="btnEdit()" class="btn">
-                        <ion-icon  class="icon" :icon="create" />
+                    <ion-button v-if="editAble" @click="btnEdit()">
+                        <ion-icon :icon="create" />
                     </ion-button>
-                    <ion-button v-if="!editAble" @click="btnSave(medewerker_id)" class="btn">
-                        <ion-icon class="icon" :icon="save" />
+                    <ion-button v-if="!editAble" @click="btnSave(medewerker_id)">
+                        <ion-icon :icon="save" />
                     </ion-button>
-                    <ion-button @click="btnDelete(true, medewerker_id)" class="btn">
+                    <ion-button @click="btnDelete(true, medewerker_id)">
                         <ion-icon  class="icon" :icon="trash" />
                     </ion-button>
                 </ion-col>

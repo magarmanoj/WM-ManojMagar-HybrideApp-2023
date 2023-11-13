@@ -7,22 +7,6 @@ ion-row {
   border: 1px solid rgb(217, 228, 62);
 }
 
-ion-col {
-  padding: 1em;
-}
-
-ion-button {
-  margin-right: 1em;
-  display: flex;
-  justify-content: center;
-  --background: rgb(1, 103, 1);
-}
-
-
-ion-input {
-  margin-bottom: 1em;
-}
-
 
 ion-select {
   width: 50%;
@@ -48,38 +32,36 @@ ion-select-option {
 
 
 
-/** Medewerker Project */
+/**Project, Mederwerker, Project en medewerkers */
 .header-row {
   display: flex;
-  justify-content: center;
-  background-color: rgb(1, 103, 1);
-  padding: 10px;
   text-align: center;
+  background-color: rgb(1, 103, 1);
   font-weight: bold;
   color: white;
+  padding: 10px;
 }
 
 .lbrow {
   flex: 1;
   text-align: center;
-  min-width: 0;
-  width: 25%;
+  margin: 0; 
+  padding: 0;
 }
 
 
-/** Medewerkers */
+.item {
+  border: 1px solid black;
+}
+
 .btn {
-  width: 50%;
+  width: 30%;
 }
 
-ion-icon {
-  font-size: 2em;
+.icon {
+  font-size: 1.5em;
 }
 
-.col {
-  display: flex;
-  justify-content: space-evenly;
-}
 
 
 /** About us */
@@ -99,20 +81,19 @@ ion-card {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-@media (max-width: 360px) {
+@media screen and (max-width: 360px) {
   .header-row {
-    font-size: small;
+    flex-direction: column;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
   }
 
-  .item {
-    font-size: small;
+  .lbrow {
+    flex: none; 
   }
 
   .btn {
-    width: 50%;
-  }
-
-  ion-icon {
-    font-size: 1.2em;
+    width: 100%; 
   }
 }

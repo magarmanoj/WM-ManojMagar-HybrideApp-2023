@@ -1,44 +1,44 @@
 <template>
     <ion-content :fullscreen="true">
-        <ion-list>
+        <ion-grid>
             <ion-row class="header-row">
-                <ion-col>Voornaam</ion-col>
-                <ion-col>Familienaam</ion-col>
-                <ion-col>Specialisatie</ion-col>
-                <ion-col>Button</ion-col>
+                <ion-col class="lbrow">Voornaam</ion-col>
+                <ion-col class="lbrow">Familienaam</ion-col>
+                <ion-col class="lbrow">Specialisatie</ion-col>
+                <ion-col class="lbrow">Button</ion-col>
             </ion-row>
-            <ion-item v-for="{ medewerker_id, voornaam, familienaam, specialisatie } in medewerkers" :key="medewerker_id">
+            <ion-row class="item" v-for="{ medewerker_id, voornaam, familienaam, specialisatie } in medewerkers" :key="medewerker_id">
                 <ion-input class="lbrow" :value="voornaam" :readonly="editAble"
                     @ionInput="onInputChange('voornaam', medewerker_id, $event)"></ion-input>
                 <ion-input class="lbrow" :value="familienaam" :readonly="editAble"
                     @ionInput="onInputChange('familienaam', medewerker_id, $event)"></ion-input>
                 <ion-input class="lbrow" :value="specialisatie" :readonly="editAble"
                     @ionInput="onInputChange('specialisatie', medewerker_id, $event)"></ion-input>
-                <ion-col class="col">
+                <ion-col class="lbrow">
                     <ion-button v-if="editAble" @click="btnEdit()" class="btn">
-                        <ion-icon :icon="create" />
+                        <ion-icon  class="icon" :icon="create" />
                     </ion-button>
                     <ion-button v-if="!editAble" @click="btnSave(medewerker_id)" class="btn">
-                        <ion-icon :icon="save" />
+                        <ion-icon class="icon" :icon="save" />
                     </ion-button>
                     <ion-button @click="btnDelete(true, medewerker_id)" class="btn">
-                        <ion-icon :icon="trash" />
+                        <ion-icon  class="icon" :icon="trash" />
                     </ion-button>
                 </ion-col>
-            </ion-item>
+            </ion-row>
             <ion-modal :is-open="isOpen">
                 <p>Ben je zeker dat je dit wil verwijderen?</p>
                 <ion-button @click="btnOk(toDeleteId)">OK</ion-button>
                 <ion-button @click="btnCancel(false)">Cancel</ion-button>
             </ion-modal>
-        </ion-list>
+        </ion-grid>
     </ion-content>
 </template>
   
   
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import { IonContent, IonList, IonItem, IonInput, IonRow, IonCol, IonButton, IonModal, IonIcon } from '@ionic/vue';
+import { IonContent, IonGrid, IonInput, IonRow, IonCol, IonButton, IonModal, IonIcon } from '@ionic/vue';
 import { trash, save, create } from 'ionicons/icons';
 
 
@@ -155,4 +155,6 @@ onMounted(() => {
 });
 </script>
 
-<style>@import '@/theme/styles.css';</style>
+<style>
+@import '@/theme/styles.css';
+</style>

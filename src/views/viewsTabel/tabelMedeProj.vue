@@ -1,36 +1,36 @@
 <template>
-    <ion-content>
-        <ion-list>
+    <ion-content :fullscreen="true">
+        <ion-grid>
             <ion-row class="header-row">
-                <ion-col>Naam</ion-col>
-                <ion-col>Voornaam</ion-col>
-                <ion-col>Familienaam</ion-col>
-                <ion-col>Specialisatie</ion-col>
-                <ion-col>Button</ion-col>
+                <ion-col class="lbrow">Naam</ion-col>
+                <ion-col class="lbrow">Voornaam</ion-col>
+                <ion-col class="lbrow">Familienaam</ion-col>
+                <ion-col class="lbrow">Specialisatie</ion-col>
+                <ion-col class="lbrow">Button</ion-col>
             </ion-row>
-            <ion-item v-for="{ naam, voornaam, familienaam, specialisatie, medewerker_id, project_id } in medeProject"
+            <ion-row class="item" v-for="{ naam, voornaam, familienaam, specialisatie, medewerker_id, project_id } in medeProject"
                 :key="medewerker_id">
-                <ion-label class="lbrow">{{ naam }}</ion-label>
-                <ion-label class="lbrow">{{ voornaam }}</ion-label>
-                <ion-label class="lbrow">{{ familienaam }}</ion-label>
-                <ion-label class="lbrow">{{ specialisatie }}</ion-label>
-                <ion-col class="col">
+                <ion-input class="lbrow" :value="naam" :readonly="editAble"></ion-input>
+                <ion-input class="lbrow" :value="voornaam" :readonly="editAble"></ion-input>
+                <ion-input class="lbrow" :value="familienaam" :readonly="editAble"></ion-input>
+                <ion-input class="lbrow" :value="specialisatie" :readonly="editAble"></ion-input>
+                <ion-col class="lbrow">
                     <ion-button @click="btnDelete(true, medewerker_id, project_id)" class="btn">
-                        <ion-icon :icon="trash"/></ion-button>
+                        <ion-icon class="icon" :icon="trash"/></ion-button>
                 </ion-col>
-            </ion-item>
+            </ion-row>
             <ion-modal :is-open="isOpen">
                 <p>Ben je zeker dat je dit wil verwijderen?</p>
                 <ion-button @click="btnOk(toDeleteMedeId, toDeletePrID)">OK</ion-button>
                 <ion-button @click="btnCancel(false)">Cancel</ion-button>
             </ion-modal>
-        </ion-list>
+        </ion-grid>
     </ion-content>
 </template>
   
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import { IonContent, IonList, IonItem, IonLabel, IonRow, IonCol, IonButton, IonModal, IonIcon } from '@ionic/vue';
+import { IonContent, IonGrid, IonInput, IonRow, IonCol, IonButton, IonModal, IonIcon } from '@ionic/vue';
 import { trash } from 'ionicons/icons';
 
 
@@ -40,6 +40,7 @@ const axios = inject('axios')
 const isOpen = ref(false);
 const toDeleteMedeId = ref(null);
 const toDeletePrID = ref(null);
+const editAble = ref(true)
 
 
 const btnDelete = (open, medewerker_id, project_id) => {

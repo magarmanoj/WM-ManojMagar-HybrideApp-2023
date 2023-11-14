@@ -7,20 +7,20 @@
                 <ion-col class="lbrow">Omschrijving</ion-col>
                 <ion-col class="lbrow">Button</ion-col>
             </ion-row>
-            <ion-row class="item" v-for="{ project_id, naam, code, beschrijving } in projects" :key="project_id">
-                <!-- :class van chatgpt maak een klas waar je conditie kan zetten die je dan opmak kan geven-->
-                <ion-input class="lbrow" :value="naam" :readonly="editAble" :class="{ 'editable': !editAble }"
+            <ion-row class="item" v-for="{ project_id, naam, code, beschrijving, editable } in projects" :key="project_id">
+                <!-- :class of chatgpt make a class where you can set a condition that you can style accordingly -->
+                <ion-input class="lbrow" :value="naam" :readonly="!editable" :class="{ 'editable': editable }"
                     @ionInput="onInputChange('naam', project_id, $event)"></ion-input>
-                <!--readonly zo dat je niet direct op input field kan schrijven-->
-                <ion-input class="lbrow" :value="code" :readonly="editAble" :class="{ 'editable': !editAble }"
+                <!--readonly so that you cannot directly write on the input field-->
+                <ion-input class="lbrow" :value="code" :readonly="!editable" :class="{ 'editable': editable }"
                     @ionInput="onInputChange('code', project_id, $event)"></ion-input>
-                <ion-input class="lbrow" :value="beschrijving" :readonly="editAble" :class="{ 'editable': !editAble }"
+                <ion-input class="lbrow" :value="beschrijving" :readonly="!editable" :class="{ 'editable': editable }"
                     @ionInput="onInputChange('beschrijving', project_id, $event)"></ion-input>
                 <ion-col class="lbrow">
-                    <ion-button v-if="editAble" @click="btnEdit()">
+                    <ion-button v-if="!editable" @click="btnEdit(project_id)">
                         <ion-icon :icon="create" />
                     </ion-button>
-                    <ion-button v-if="!editAble" @click="btnSave(project_id)">
+                    <ion-button v-if="editable" @click="btnSave(project_id)">
                         <ion-icon :icon="save" />
                     </ion-button>
                     <ion-button @click="btnDelete(true, project_id)">
@@ -45,8 +45,6 @@ import { trash, save, create } from 'ionicons/icons';
 const projects = ref([]);
 
 const axios = inject('axios')
-
-const editAble = ref(true);
 const isOpen = ref(false);
 const toDeleteId = ref(null);
 
@@ -58,13 +56,15 @@ const onInputChange = (field, project_id, event) => {
     updatedInput[field] = event.detail.value;
 };
 
-const btnEdit = () => {
-    editAble.value = false;
-
+const btnEdit = (project_id) => {
+    projects.value.forEach(project => {
+        project.editable = project.project_id == project_id
+    });
 }
 
 const btnSave = (project_id) => {
-    const { naam, code, beschrijving } = projects.value.find(project => project.project_id == project_id);
+    const editedProject = projects.value.find(project => project.project_id === project_id);
+    const { naam, code, beschrijving } = editedProject;
     axios
         .post('https://manojmagar.be/RESTfulAPI/Taak1/api/UpdateProject.php', {
             project_id: project_id,
@@ -79,12 +79,12 @@ const btnSave = (project_id) => {
             if (!response.data.data) {
                 console.log('response.data.data is not ok');
                 window.alert('je hebt niets verandert.')
-                editAble.value = true;
+                editedProject.editable = false;
                 return;
             }
             window.alert("Het opslagen was gelukt!");
             console.log(response.data);
-            editAble.value = true;
+            editedProject.editable = false;
             getProjects();
         });
 }
@@ -137,7 +137,10 @@ const getProjects = () => {
                 return;
             }
             console.log(response.data);
-            projects.value = response.data.data;
+            projects.value = response.data.data.map(project => ({
+                ...project,
+                editable: false
+            }));
         });
 }
 

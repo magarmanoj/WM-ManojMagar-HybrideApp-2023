@@ -7,18 +7,18 @@
                 <ion-col class="lbrow">Specialisatie</ion-col>
                 <ion-col class="lbrow">Button</ion-col>
             </ion-row>
-            <ion-row class="item" v-for="{ medewerker_id, voornaam, familienaam, specialisatie } in medewerkers" :key="medewerker_id">
-                <ion-input class="lbrow" :value="voornaam" :readonly="editAble" :class="{ 'editable': !editAble }"
+            <ion-row class="item" v-for="{ medewerker_id, voornaam, familienaam, specialisatie, editable } in medewerkers" :key="medewerker_id">
+                <ion-input class="lbrow" :value="voornaam" :readonly="!editable" :class="{ 'editable': editable }"
                     @ionInput="onInputChange('voornaam', medewerker_id, $event)"></ion-input>
-                <ion-input class="lbrow" :value="familienaam" :readonly="editAble" :class="{ 'editable': !editAble }"
+                <ion-input class="lbrow" :value="familienaam" :readonly="!editable" :class="{ 'editable': editable }"
                     @ionInput="onInputChange('familienaam', medewerker_id, $event)"></ion-input>
-                <ion-input class="lbrow" :value="specialisatie" :readonly="editAble" :class="{ 'editable': !editAble }"
+                <ion-input class="lbrow" :value="specialisatie" :readonly="!editable" :class="{ 'editable': editable }"
                     @ionInput="onInputChange('specialisatie', medewerker_id, $event)"></ion-input>
                 <ion-col class="lbrow">
-                    <ion-button v-if="editAble" @click="btnEdit()">
+                    <ion-button v-if="!editable" @click="btnEdit(medewerker_id)">
                         <ion-icon :icon="create" />
                     </ion-button>
-                    <ion-button v-if="!editAble" @click="btnSave(medewerker_id)">
+                    <ion-button v-if="editable" @click="btnSave(medewerker_id)">
                         <ion-icon :icon="save" />
                     </ion-button>
                     <ion-button @click="btnDelete(true, medewerker_id)">
@@ -44,7 +44,6 @@ import { trash, save, create } from 'ionicons/icons';
 
 const axios = inject('axios')
 const medewerkers = ref([]);
-const editAble = ref(true);
 const isOpen = ref(false);
 const toDeleteId = ref(null);
 
@@ -56,13 +55,17 @@ const onInputChange = (field, medewerker_id, event) => {
     updatedInput[field] = event.detail.value;
 }
 
-const btnEdit = () => {
-    editAble.value = false;
+const btnEdit = (medewerker_id) => {
+    medewerkers.value.forEach(medwk => {
+        medwk.editable = medwk.medewerker_id == medewerker_id;
+        
+    });
 }
 
 // werk nog niet 
 const btnSave = (medewerker_id) => {
-    const { voornaam, familienaam, specialisatie } = medewerkers.value.find(mede => mede.medewerker_id == medewerker_id);
+    const editedMedewerker = medewerkers.value.find(mede => mede.medewerker_id == medewerker_id);
+    const { voornaam, familienaam, specialisatie } = editedMedewerker;
     axios
         .post('https://manojmagar.be/RESTfulAPI/Taak1/api/UpdateMedewerker.php', {
             medewerker_id: medewerker_id,
@@ -77,16 +80,12 @@ const btnSave = (medewerker_id) => {
             if (!response.data.data) {
                 console.log('response.data.data is not ok');
                 window.alert('je hebt niets verandert.')
-                editAble.value = true;
+                editedMedewerker.editable = false;
                 return;
             }
             console.log(response.data);
-            medewerkers.value = [];
-            for (let i = 0, end = response.data.data.length; i < end; i++) {
-                medewerkers.value.push(response.data.data[i]);
-            }
             window.alert("Het opslagen was gelukt!");
-            editAble.value = true;
+            editedMedewerker.editable = false;
             getMedewerker();
         });
 
@@ -143,10 +142,10 @@ const getMedewerker = () => {
                 return;
             }
             console.log(response.data);
-            medewerkers.value = [];
-            for (let i = 0, end = response.data.data.length; i < end; i++) {
-                medewerkers.value.push(response.data.data[i]);
-            }
+            medewerkers.value = response.data.data.map(medewerker => ({
+                ...medewerker, 
+                editable:false
+            }));
         });
 }
 

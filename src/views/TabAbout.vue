@@ -14,7 +14,7 @@
                     <ion-grid class="about-section">
                         <ion-row>
                             <ion-col class="aboutcol">
-                                <ion-img src="../../img/foto.jpg" alt="Author's Photo" class="photo"></ion-img>
+                                <ion-img src="https://cdn.discordapp.com/attachments/925348541415698472/1173969493656084550/image.png?ex=6565e34a&is=65536e4a&hm=78ac44c8700430510c4ee866a4983a7d5377c528de676907a29f4b544de3a30b&" alt="Author's Photo" class="photo"></ion-img>
                             </ion-col>
                             <ion-col class="aboutcol">
                                 <ion-card-content>

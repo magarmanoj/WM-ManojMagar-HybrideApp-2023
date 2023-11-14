@@ -99,7 +99,7 @@
                 <ion-item>
                   <ion-select label="Selecteer Project" label-placement="stacked" interface="popover"
                     placeholder="Selecteer Project"  v-model="selectedProject">
-                    <ion-select-option v-for="{ project_id, naam, code } in projects" :key="project_id"
+                    <ion-select-option v-for="{ project_id, naam } in projects" :key="project_id"
                       :value="project_id">
                       {{ naam }}
                     </ion-select-option>
@@ -235,10 +235,10 @@ const addProject = () => {
 
 // combobox: show all the medewerkers en voor project alle de project 
 const toewijzen = () => {
-  if (!selectedMedewerker || !selectedProject) {
-    window.alert('Selecteer een medewerker en een project.');
-    return;
-  }
+  if (!selectedMedewerker.value || !selectedProject.value) {
+  window.alert('Selecteer een medewerker en een project.');
+  return;
+}
   axios
     .post('https://manojmagar.be/RESTfulAPI/Taak1/api/ToewijzenMedeProject.php', {
       medewerker_id: selectedMedewerker.value,
@@ -257,10 +257,10 @@ const toewijzen = () => {
 }
 
 const verwijderenProjectMedewerker = () => {
-  if (!selectedMedewerker || !selectedProject) {
-    window.alert('Selecteer een medewerker en een project.');
-    return;
-  }
+  if (!selectedMedewerker.value || !selectedProject.value) {
+  window.alert('Selecteer een medewerker en een project.');
+  return;
+}
   axios
     .post('https://manojmagar.be/RESTfulAPI/Taak1/api/VerwijderMedeProject.php', {
       medewerker_id: selectedMedewerker.value,

@@ -29,9 +29,25 @@
                 </ion-col>
             </ion-row>
             <ion-modal :is-open="isOpen">
-                <p>Ben je zeker dat je dit wil verwijderen?</p>
-                <ion-button @click="btnOk(toDeleteId)">OK</ion-button>
-                <ion-button @click="btnCancel(false)">Cancel</ion-button>
+                <ion-grid class="modal-wrapper">
+                    <ion-row class="ion-align-items-center ion-justify-content-center">
+                        <ion-col :size="12" class="modal-content">
+                            <p>Ben je zeker dat je dit wil verwijderen?</p>
+                            <ion-row class="modal-buttons ion-justify-content-center">
+                                <ion-col>
+                                    <ion-button @click="btnOk(toDeleteId)" expand="full">
+                                        OK <ion-icon :icon="happy" />
+                                    </ion-button>
+                                </ion-col>
+                                <ion-col>
+                                    <ion-button @click="btnCancel(false)" expand="full">
+                                        Cancel <ion-icon :icon="sad"></ion-icon>
+                                    </ion-button>
+                                </ion-col>
+                            </ion-row>
+                        </ion-col>
+                    </ion-row>
+                </ion-grid>
             </ion-modal>
         </ion-grid>
     </ion-content>
@@ -40,7 +56,7 @@
 <script setup>
 import { ref, onMounted, inject } from 'vue';
 import { IonContent, IonGrid, IonInput, IonRow, IonCol, IonButton, IonModal, IonIcon } from '@ionic/vue';
-import { trash, save, create } from 'ionicons/icons';
+import { trash, save, create, happy, sad } from 'ionicons/icons';
 
 const projects = ref([]);
 
@@ -149,6 +165,36 @@ onMounted(() => {
 });
 </script>
   
-<style>
+<style scoped>
 @import '@/theme/styles.css';
+
+.modal-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+
+
+.modal-content {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0px 13px 4px rgb(11 0 0 / 10%);
+    text-align: center;
+    color: black;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+.modal-buttons ion-button {
+    --background: black;
+    --color: white;
+}
 </style>
+

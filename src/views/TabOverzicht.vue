@@ -159,6 +159,9 @@ const getMedewerkersAndProjects = () => {
       medewerkers.value = response.data.data.map(medewerker => ({
         ...medewerker
       }));
+    })
+    .catch(error => {
+      console.error('Error fetching Medewerkers:', error);
     });
 
   axios
@@ -181,6 +184,9 @@ const getMedewerkersAndProjects = () => {
       projects.value = response.data.data.map(project => ({
         ...project
       }));
+    })
+    .catch(error => {
+      console.error('Error fetching Projects:', error);
     });
 }
 
@@ -196,17 +202,21 @@ const addMedewerker = () => {
       familienaam: medewerkerFamilienaam.value,
       specialisatie: specialisatie.value
     })
-    .then(response => {
-      console.log(response);
-      if (response.status !== 200) {
-        console.log(response.status);
-      } else {
+    .then(response => response.data)
+    .then(responseData => {
+      if (responseData.status == 'ok') {
         medewerkerNaam.value = '';
         medewerkerFamilienaam.value = '';
         specialisatie.value = '';
-        window.alert('Medewerker toegevoegd.')
+        window.alert('Medewerker toegevoegd.');
+      } else {
+        window.alert('Er is een fout opgetreden bij het toevoegen van de medewerker.');
       }
     })
+    .catch(error => {
+      console.error('Error:', error);
+      window.alert('Er is een fout opgetreden bij het toevoegen van de medewerker.');
+    });
 }
 
 const addProject = () => {
@@ -220,17 +230,21 @@ const addProject = () => {
       code: projectCode.value,
       beschrijving: projectOmschrijving.value
     })
-    .then(response => {
-      console.log(response);
-      if (response.status !== 200) {
-        console.log(response.status);
-      } else {
+    .then(response => response.data)
+    .then(responseData => {
+      if (responseData.status == 'ok') {
         projectNaam.value = '';
         projectCode.value = '';
         projectOmschrijving.value = '';
-        window.alert('Project teogevoegd.')
+        window.alert('Project toegevoegd.');
+      } else {
+        window.alert('Er is een fout opgetreden bij het toevoegen van het project.');
       }
     })
+    .catch(error => {
+      console.error('Error:', error);
+      window.alert('Er is een fout opgetreden bij het toevoegen van het project.');
+    });
 }
 
 // combobox: show all the medewerkers en voor project alle de project 
@@ -244,39 +258,50 @@ const toewijzen = () => {
       medewerker_id: selectedMedewerker.value,
       project_id: selectedProject.value
     })
-    .then(response => {
-      console.log(response);
-      if (response.status !== 200) {
-        console.log(response.status);
-      } else {
-        window.alert('Medewerker aan een project toegewezen.');
+    .then(response => response.data)
+    .then(responseData => {
+      if (responseData.status == 'ok') {
         selectedMedewerker.value = '';
         selectedProject.value = '';
+        window.alert('Medewerker aan een project toegewezen.');
+      } else {
+        window.alert('Er is een fout opgetreden bij het toevoegen.');
       }
     })
+    .catch(error => {
+      console.error('Error:', error);
+      window.alert('Er is een fout opgetreden bij het toevoegen.');
+    });
 }
 
 const verwijderenProjectMedewerker = () => {
   if (!selectedMedewerker.value || !selectedProject.value) {
-  window.alert('Selecteer een medewerker en een project.');
-  return;
-}
+    window.alert('Selecteer een medewerker en een project.');
+    return;
+  }
+
   axios
     .post('https://manojmagar.be/RESTfulAPI/Taak1/api/VerwijderMedeProject.php', {
       medewerker_id: selectedMedewerker.value,
       project_id: selectedProject.value
     })
-    .then(response => {
-      console.log(response);
-      if (response.status !== 200) {
-        console.log(response.status);
-      } else {
+    .then(response => response.data)
+    .then(responseData => {
+      if (responseData.status == 'ok') {
         selectedMedewerker.value = '';
         selectedProject.value = '';
         window.alert('Verwijderen is gelukt.');
+      } else {
+        window.alert('Er is een fout opgetreden bij het verwijderen.');
       }
     })
-}
+    .catch(error => {
+      console.error('Error:', error);
+      window.alert('Er is een fout opgetreden bij het verwijderen.');
+    });
+};
+
+
 
 const verzendMedewerker = () => {
   addMedewerker();
@@ -290,7 +315,7 @@ const verzendProduct = () => {
 
 const verwijderen = () => {
   verwijderenProjectMedewerker();
-}
+};
 
 onMounted(() => {
   getMedewerkersAndProjects();

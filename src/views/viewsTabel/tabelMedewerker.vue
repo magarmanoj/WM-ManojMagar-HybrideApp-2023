@@ -7,7 +7,8 @@
                 <ion-col class="lbrow">Specialisatie</ion-col>
                 <ion-col class="lbrow">Button</ion-col>
             </ion-row>
-            <ion-row class="item" v-for="{ medewerker_id, voornaam, familienaam, specialisatie, editable } in medewerkers" :key="medewerker_id">
+            <ion-row class="item" v-for="{ medewerker_id, voornaam, familienaam, specialisatie, editable } in medewerkers"
+                :key="medewerker_id">
                 <ion-input class="lbrow" :value="voornaam" :readonly="!editable" :class="{ 'editable': editable }"
                     @ionInput="onInputChange('voornaam', medewerker_id, $event)"></ion-input>
                 <ion-input class="lbrow" :value="familienaam" :readonly="!editable" :class="{ 'editable': editable }"
@@ -22,7 +23,7 @@
                         <ion-icon :icon="save" />
                     </ion-button>
                     <ion-button @click="btnDelete(true, medewerker_id)">
-                        <ion-icon  class="icon" :icon="trash" />
+                        <ion-icon class="icon" :icon="trash" />
                     </ion-button>
                 </ion-col>
             </ion-row>
@@ -74,7 +75,7 @@ const onInputChange = (field, medewerker_id, event) => {
 const btnEdit = (medewerker_id) => {
     medewerkers.value.forEach(medwk => {
         medwk.editable = medwk.medewerker_id == medewerker_id;
-        
+
     });
 }
 
@@ -89,22 +90,23 @@ const btnSave = (medewerker_id) => {
             familienaam: familienaam,
             specialisatie: specialisatie
         })
-        .then(response => {
-            if (response.status !== 200) {
-                console.log(response.status);
+        .then(response => response.data)
+        .then(responseData => {
+            if (responseData.status == 'ok') {
+                window.alert('Het opslaan was gelukt!');
+                console.log(responseData.data);
+                editedProject.editable = false;
+                getProjects();
+            } else {
+                console.log('Response data is not ok');
+                window.alert('Je hebt niets veranderd.');
+                editedProject.editable = false;
             }
-            if (!response.data.data) {
-                console.log('response.data.data is not ok');
-                window.alert('je hebt niets verandert.')
-                editedMedewerker.editable = false;
-                return;
-            }
-            console.log(response.data);
-            window.alert("Het opslagen was gelukt!");
-            editedMedewerker.editable = false;
-            getMedewerker();
+        })
+        .catch(error => {
+            console.error('Error saving project:', error);
+            window.alert('Er is een fout opgetreden bij het opslaan van het project.');
         });
-
 }
 
 const btnDelete = (open, medewerker_id) => {
@@ -125,23 +127,23 @@ const btnOk = (toDeleteId) => {
         .post('https://manojmagar.be/RESTfulAPI/Taak1/api/DeleteMedewerker.php', {
             medewerker_id: toDeleteId
         })
-        .then(response => {
-            if (response.status !== 200) {
-                console.log(response.status);
+        .then(response => response.data)
+        .then(responseData => {
+            if (responseData.status == 'ok') {
+                console.log(responseData.data);
+                isOpen.value = false;
+                window.alert('Verwijderen van de medewerker is gelukt');
+                getMedewerker();
+
+            } else {
+                window.alert('Je kan de medewerker niet verwijderen omdat er een serverfout is opgetreden!');
             }
-            if (!response.data.data) {
-                console.log('response.data.data is not ok');
-                return;
-            }
-            console.log(response.data);
-            isOpen.value = false;
-            getMedewerker();
         })
         .catch(error => {
-            console.error('Error:', error);
+            console.error('Error deleting project:', error);
             window.alert('Je kan de medewerker niet verwijderen omdat er een serverfout is opgetreden!');
         });
-}
+};
 
 
 
@@ -150,7 +152,7 @@ const getMedewerker = () => {
     axios
         .post('https://manojmagar.be/RESTfulAPI/Taak1/api/Medewerkerget.php')
         .then(response => {
-            if (response.status !== 200) {
+            if (response.status != 200) {
                 console.log(response.status);
             }
             if (!response.data.data) {
@@ -159,9 +161,12 @@ const getMedewerker = () => {
             }
             console.log(response.data);
             medewerkers.value = response.data.data.map(medewerker => ({
-                ...medewerker, 
-                editable:false
+                ...medewerker,
+                editable: false
             }));
+        })
+        .catch(error => {
+            console.error('Error fetching Projects:', error);
         });
 }
 

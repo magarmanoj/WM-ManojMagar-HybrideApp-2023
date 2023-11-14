@@ -79,7 +79,7 @@ const btnEdit = (project_id) => {
 }
 
 const btnSave = (project_id) => {
-    const editedProject = projects.value.find(project => project.project_id === project_id);
+    const editedProject = projects.value.find(project => project.project_id == project_id);
     const { naam, code, beschrijving } = editedProject;
     axios
         .post('https://manojmagar.be/RESTfulAPI/Taak1/api/UpdateProject.php', {
@@ -88,20 +88,22 @@ const btnSave = (project_id) => {
             code: code,
             beschrijving: beschrijving
         })
-        .then(response => {
-            if (response.status !== 200) {
-                console.log(response.status);
-            }
-            if (!response.data.data) {
-                console.log('response.data.data is not ok');
-                window.alert('je hebt niets verandert.')
+        .then(response => response.data)
+        .then(responseData => {
+            if (responseData.status == 'ok') {
+                window.alert('Het opslaan was gelukt!');
+                console.log(responseData.data);
                 editedProject.editable = false;
-                return;
+                getProjects();
+            } else {
+                console.log('Response data is not ok');
+                window.alert('Je hebt niets veranderd.');
+                editedProject.editable = false;
             }
-            window.alert("Het opslagen was gelukt!");
-            console.log(response.data);
-            editedProject.editable = false;
-            getProjects();
+        })
+        .catch(error => {
+            console.error('Error saving project:', error);
+            window.alert('Er is een fout opgetreden bij het opslaan van het project.');
         });
 }
 
@@ -123,21 +125,20 @@ const btnOk = (toDeleteId) => {
         .post('https://manojmagar.be/RESTfulAPI/Taak1/api/Delete.php', {
             project_id: toDeleteId
         })
-        .then(response => {
-            if (response.status !== 200) {
-                console.log(response.status);
+        .then(response => response.data)
+        .then(responseData => {
+            if (responseData && responseData.status == 'ok') {
+                console.log(responseData.data);
+                isOpen.value = false;
+                window.alert('Verwijderen van de project is gelukt');
+                getProjects();
+            } else {
+                window.alert('Je kan het project niet verwijderen omdat er een serverfout is opgetreden!');
             }
-            if (!response.data.data) {
-                console.log('response.data.data is not ok');
-                return;
-            }
-            console.log(response.data);
-            isOpen.value = false;
-            getProjects();
         })
         .catch(error => {
-            console.error('Error:', error);
-            window.alert('Je kan de medewerker niet verwijderen omdat er een serverfout is opgetreden!');
+            console.error('Error deleting project:', error);
+            window.alert('Je kan het project niet verwijderen omdat er een serverfout is opgetreden!');
         });
 }
 
@@ -145,7 +146,7 @@ const getProjects = () => {
     axios
         .post('https://manojmagar.be/RESTfulAPI/Taak1/api/Projectsget.php')
         .then(response => {
-            if (response.status !== 200) {
+            if (response.status != 200) {
                 console.log(response.status);
             }
             if (!response.data.data) {
@@ -157,6 +158,9 @@ const getProjects = () => {
                 ...project,
                 editable: false
             }));
+        })
+        .catch(error => {
+            console.error('Error fetching Projects:', error);
         });
 }
 
@@ -167,34 +171,5 @@ onMounted(() => {
   
 <style scoped>
 @import '@/theme/styles.css';
-
-.modal-wrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-}
-
-
-
-.modal-content {
-    background-color: white;
-    border-radius: 8px;
-    box-shadow: 0px 13px 4px rgb(11 0 0 / 10%);
-    text-align: center;
-    color: black;
-}
-
-.modal-buttons {
-    display: flex;
-    justify-content: space-around;
-    margin-top: 20px;
-}
-
-.modal-buttons ion-button {
-    --background: black;
-    --color: white;
-}
 </style>
 

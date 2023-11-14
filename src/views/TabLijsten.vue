@@ -29,9 +29,9 @@
 <script setup>
 import { ref } from 'vue';
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonButton } from '@ionic/vue';
-import TabelMedewerker from './viewsTabel/TabelMedewerker.vue';
-import TabelProject from './viewsTabel/TabelProject.vue';
-import TabelMedeProj from './viewsTabel/TabelMedeProj.vue';
+import TabelMedewerker from './viewsTabel/tabelMedewerker.vue';
+import TabelProject from './viewsTabel/tabelProject.vue';
+import TabelMedeProj from './viewsTabel/tabelMedeProj.vue';
 
 const toonMedewerkerLijst = ref(false);
 const toonProjectLijst = ref(false);

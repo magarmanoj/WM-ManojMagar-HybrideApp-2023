@@ -8,7 +8,8 @@
                 <ion-col class="lbrow">Specialisatie</ion-col>
                 <ion-col class="lbrow">Button</ion-col>
             </ion-row>
-            <ion-row class="item" v-for="{ naam, voornaam, familienaam, specialisatie, medewerker_id, project_id } in medeProject"
+            <ion-row class="item"
+                v-for="{ naam, voornaam, familienaam, specialisatie, medewerker_id, project_id } in medeProject"
                 :key="medewerker_id">
                 <ion-input class="lbrow" :value="naam"></ion-input>
                 <ion-input class="lbrow" :value="voornaam"></ion-input>
@@ -16,7 +17,7 @@
                 <ion-input class="lbrow" :value="specialisatie"></ion-input>
                 <ion-col class="lbrow">
                     <ion-button @click="btnDelete(true, medewerker_id, project_id)">
-                        <ion-icon class="icon" :icon="trash"/></ion-button>
+                        <ion-icon class="icon" :icon="trash" /></ion-button>
                 </ion-col>
             </ion-row>
             <ion-modal :is-open="isOpen">
@@ -26,7 +27,7 @@
                             <p>Ben je zeker dat je dit wil verwijderen?</p>
                             <ion-row class="modal-buttons ion-justify-content-center">
                                 <ion-col>
-                                    <ion-button @click="btnOk(toDeleteId)" expand="full">
+                                    <ion-button @click="btnOk(toDeleteMedeId, toDeletePrID)" expand="full">
                                         OK <ion-icon :icon="happy" />
                                     </ion-button>
                                 </ion-col>
@@ -79,21 +80,18 @@ const btnOk = (toDeleteMedeId, toDeletePrID) => {
             medewerker_id: toDeleteMedeId,
             project_id: toDeletePrID
         })
-        .then(response => {
-            if (response.status !== 200) {
-                console.log(response.status);
+        .then(response => response.data)
+        .then(responseData => {
+            if (responseData.status == 'ok') {
+                console.log(responseData.data);
+                isOpen.value = false;
+                window.alert('Verwijderen is gelukt');
+                getMedewerkerProject();
             }
-            if (!response.data.data) {
-                console.log('response.data.data is not ok');
-                return;
-            }
-            console.log(response.data);
-            isOpen.value = false;
-            getMedewerkerProject();
         })
         .catch(error => {
-            console.error('Error:', error);
-            window.alert('Je kan de medewerker niet verwijderen omdat er een serverfout is opgetreden!');
+            console.error('Error deleting:', error);
+            window.alert('Je kan dit niet verwijderen omdar er een serverfout is opgetreden!');
         });
 }
 
@@ -101,7 +99,7 @@ const getMedewerkerProject = () => {
     axios
         .post('https://manojmagar.be/RESTfulAPI/Taak1/api/WerkerProjectget.php')
         .then(response => {
-            if (response.status !== 200) {
+            if (response.status != 200) {
                 console.log(response.status);
             }
             if (!response.data.data) {
@@ -112,6 +110,9 @@ const getMedewerkerProject = () => {
             medeProject.value = response.data.data.map(medeProject => ({
                 ...medeProject
             }));
+        })
+        .catch(error => {
+            console.error('Error fetching:', error);
         });
 }
 

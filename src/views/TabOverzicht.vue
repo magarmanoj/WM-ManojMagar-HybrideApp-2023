@@ -87,14 +87,23 @@
             <ion-row>
               <ion-col>
                 <ion-item>
-                  <ion-input label="Mederwerker_id" label-placement="stacked" placeholder="medewerker id" v-model="mdw_id"
-                    type="number" required="true"></ion-input>
+                  <ion-select label="Selecteer Medewerker" label-placement="stacked" interface="popover"
+                    placeholder="Selecteer Medewerker"  v-model="selectedMedewerker">
+                    <ion-select-option v-for="{ medewerker_id, voornaam, familienaam } in medewerkers" :key="medewerker_id" :value="medewerker_id">
+                {{ voornaam }} {{ familienaam }}
+              </ion-select-option>
+                  </ion-select>
                 </ion-item>
               </ion-col>
               <ion-col>
                 <ion-item>
-                  <ion-input label="Project_id" label-placement="stacked" placeholder="project id" v-model="pr_id"
-                    type="number" required="true"></ion-input>
+                  <ion-select label="Selecteer Project" label-placement="stacked" interface="popover"
+                    placeholder="Selecteer Project"  v-model="selectedProject">
+                    <ion-select-option v-for="{ project_id, naam, code } in projects" :key="project_id"
+                      :value="project_id">
+                      {{ naam }}
+                    </ion-select-option>
+                  </ion-select>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -114,9 +123,13 @@
 </template>
 
 <script setup>
-import { ref, inject } from 'vue'
+import { ref, inject, onMounted } from 'vue'
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, IonCol, IonItem, IonInput, IonSelect, IonSelectOption, IonButton } from '@ionic/vue';
 
+const axios = inject('axios')
+
+const projects = ref([]);
+const medewerkers = ref([]);
 
 // medewerkers toevoegen
 const medewerkerNaam = ref('');
@@ -128,13 +141,50 @@ const projectNaam = ref('');
 const projectCode = ref('');
 const projectOmschrijving = ref('');
 
-
 // projecten toewijzen aan een medewerkers of verwijderen.
-const mdw_id = ref('');
-const pr_id = ref('');
+const selectedMedewerker = ref('');
+const selectedProject = ref('');
+
+const getMedewerkersAndProjects = () => {
+  axios
+    .post('https://manojmagar.be/RESTfulAPI/Taak1/api/Medewerkerget.php')
+    .then(response => {
+      if (response.status !== 200) {
+        console.log(response.status);
+      }
+      if (!response.data.data) {
+        console.log('response.data.data is not ok');
+        return;
+      }
+      medewerkers.value = response.data.data.map(medewerker => ({
+        ...medewerker
+      }));
+    });
+
+  axios
+    .post('https://manojmagar.be/RESTfulAPI/Taak1/api/Projectsget.php')
+    .then(response => {
+      if (response.status !== 200) {
+        console.log(response.status);
+      }
+      if (!response.data.data) {
+        console.log('response.data.data is not ok');
+        return;
+      }
+      /** Maak een lijst en voegd alle data toe in dit array
+       * projects.value = [];
+            for (let i = 0, end = response.data.data.length; i < end; i++) {
+                projects.value.push(response.data.data[i]);
+            } 
+            Onderaan is kortere versie     
+            */
+      projects.value = response.data.data.map(project => ({
+        ...project
+      }));
+    });
+}
 
 
-const axios = inject('axios')
 const addMedewerker = () => {
   if (medewerkerNaam.value.trim() == '' || medewerkerFamilienaam.value.trim() == '' || specialisatie.value.trim() == '') {
     window.alert('Een of meerdere waardes zijn leeg!');
@@ -184,45 +234,45 @@ const addProject = () => {
 }
 
 // combobox: show all the medewerkers en voor project alle de project 
-const medewToewijzenAanProject = () => {
-  if (mdw_id.value == '' || pr_id.value == '') {
-    window.alert('Een of meerdere waardes zijn leeg!');
+const toewijzen = () => {
+  if (!selectedMedewerker || !selectedProject) {
+    window.alert('Selecteer een medewerker en een project.');
     return;
   }
   axios
     .post('https://manojmagar.be/RESTfulAPI/Taak1/api/ToewijzenMedeProject.php', {
-      medewerker_id: mdw_id.value,
-      project_id: pr_id.value
+      medewerker_id: selectedMedewerker.value,
+      project_id: selectedProject.value
     })
     .then(response => {
       console.log(response);
       if (response.status !== 200) {
         console.log(response.status);
       } else {
-        mdw_id.value = '';
-        pr_id.value = '';
-        window.alert('Medewerker aan een project toegewijzigd.')
+        window.alert('Medewerker aan een project toegewezen.');
+        selectedMedewerker.value = '';
+        selectedProject.value = '';
       }
     })
 }
 
 const verwijderenProjectMedewerker = () => {
-  if (mdw_id.value == '' || pr_id.value == '') {
-    window.alert('Een of meerdere waardes zijn leeg!');
+  if (!selectedMedewerker || !selectedProject) {
+    window.alert('Selecteer een medewerker en een project.');
     return;
   }
   axios
     .post('https://manojmagar.be/RESTfulAPI/Taak1/api/VerwijderMedeProject.php', {
-      medewerker_id: mdw_id.value,
-      project_id: pr_id.value
+      medewerker_id: selectedMedewerker.value,
+      project_id: selectedProject.value
     })
     .then(response => {
       console.log(response);
       if (response.status !== 200) {
         console.log(response.status);
       } else {
-        mdw_id.value = '';
-        pr_id.value = '';
+        selectedMedewerker.value = '';
+        selectedProject.value = '';
         window.alert('Verwijderen is gelukt.');
       }
     })
@@ -236,16 +286,16 @@ const verzendProduct = () => {
   addProject();
 };
 
-const toewijzen = () => {
-  medewToewijzenAanProject();
-}
+
 
 const verwijderen = () => {
   verwijderenProjectMedewerker();
 }
 
+onMounted(() => {
+  getMedewerkersAndProjects();
+});
+
 </script>
 
-<style>
-@import '@/theme/styles.css';
-</style>
+<style>@import '@/theme/styles.css';</style>

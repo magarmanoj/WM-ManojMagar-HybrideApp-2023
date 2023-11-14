@@ -10,10 +10,10 @@
             </ion-row>
             <ion-row class="item" v-for="{ naam, voornaam, familienaam, specialisatie, medewerker_id, project_id } in medeProject"
                 :key="medewerker_id">
-                <ion-input class="lbrow" :value="naam" :readonly="editAble"></ion-input>
-                <ion-input class="lbrow" :value="voornaam" :readonly="editAble"></ion-input>
-                <ion-input class="lbrow" :value="familienaam" :readonly="editAble"></ion-input>
-                <ion-input class="lbrow" :value="specialisatie" :readonly="editAble"></ion-input>
+                <ion-input class="lbrow" :value="naam"></ion-input>
+                <ion-input class="lbrow" :value="voornaam"></ion-input>
+                <ion-input class="lbrow" :value="familienaam"></ion-input>
+                <ion-input class="lbrow" :value="specialisatie"></ion-input>
                 <ion-col class="lbrow">
                     <ion-button @click="btnDelete(true, medewerker_id, project_id)">
                         <ion-icon class="icon" :icon="trash"/></ion-button>
@@ -40,7 +40,7 @@ const axios = inject('axios')
 const isOpen = ref(false);
 const toDeleteMedeId = ref(null);
 const toDeletePrID = ref(null);
-const editAble = ref(true)
+
 
 
 const btnDelete = (open, medewerker_id, project_id) => {
@@ -93,10 +93,9 @@ const getMedewerkerProject = () => {
                 return;
             }
             console.log(response.data);
-            medeProject.value = [];
-            for (let i = 0, end = response.data.data.length; i < end; i++) {
-                medeProject.value.push(response.data.data[i]);
-            }
+            medeProject.value = response.data.data.map(medeProject => ({
+                ...medeProject
+            }));
         });
 }
 

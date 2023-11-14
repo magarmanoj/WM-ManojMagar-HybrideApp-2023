@@ -85,7 +85,6 @@ const btnOk = (toDeleteMedeId, toDeletePrID) => {
             if (responseData.status == 'ok') {
                 console.log(responseData.data);
                 isOpen.value = false;
-                window.alert('Verwijderen is gelukt');
                 getMedewerkerProject();
             }
         })

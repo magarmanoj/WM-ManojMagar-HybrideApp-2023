@@ -130,7 +130,6 @@ const btnOk = (toDeleteId) => {
             if (responseData && responseData.status == 'ok') {
                 console.log(responseData.data);
                 isOpen.value = false;
-                window.alert('Verwijderen van de project is gelukt');
                 getProjects();
             } else {
                 window.alert('Je kan het project niet verwijderen omdat er een serverfout is opgetreden!');

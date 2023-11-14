@@ -95,12 +95,12 @@ const btnSave = (medewerker_id) => {
             if (responseData.status == 'ok') {
                 window.alert('Het opslaan was gelukt!');
                 console.log(responseData.data);
-                editedProject.editable = false;
-                getProjects();
+                editedMedewerker.editable = false;
+                getMedewerker();
             } else {
                 console.log('Response data is not ok');
                 window.alert('Je hebt niets veranderd.');
-                editedProject.editable = false;
+                editedMedewerker.editable = false;
             }
         })
         .catch(error => {
@@ -132,7 +132,6 @@ const btnOk = (toDeleteId) => {
             if (responseData.status == 'ok') {
                 console.log(responseData.data);
                 isOpen.value = false;
-                window.alert('Verwijderen van de medewerker is gelukt');
                 getMedewerker();
 
             } else {

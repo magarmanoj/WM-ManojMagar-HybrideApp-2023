@@ -46,7 +46,7 @@ ion-select-option {
 .lbrow {
   flex: 1;
   text-align: center;
-  margin: 0; 
+  margin: 0;
   padding: 0;
 }
 
@@ -136,15 +136,26 @@ ion-card {
   }
 
   .lbrow {
-    flex: none; 
+    flex: none;
   }
 
   .btn {
-    width: 100%; 
+    width: 100%;
   }
+
   ion-select {
     width: 100%;
     margin-bottom: 1em;
-  
+
   }
+
+  .btnRow {
+    display: block;
+  }
+
+
+  .btnLijst {
+    flex-direction: column;
+  }
+
 }

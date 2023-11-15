@@ -168,7 +168,7 @@ onMounted(() => {
 });
 </script>
   
-<style scoped>
+<style>
 @import '@/theme/styles.css';
 </style>
 

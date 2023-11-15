@@ -3,8 +3,13 @@
     <ion-tabs>
       <ion-router-outlet></ion-router-outlet>
       <ion-tab-bar slot="bottom">
+        <ion-tab-button tab="home" href="/tabs/tabHome">
+          <ion-icon aria-hidden="true" :icon="home" />
+          <ion-label>Home</ion-label>
+        </ion-tab-button>
+
         <ion-tab-button tab="overzicht" href="/tabs/tabOverzicht">
-          <ion-icon aria-hidden="true" :icon="addCircle" />
+          <ion-icon aria-hidden="true" :icon="desktop" />
           <ion-label>Nieuw</ion-label>
         </ion-tab-button>
 
@@ -17,7 +22,6 @@
           <ion-icon aria-hidden="true" :icon="informationCircle" />
           <ion-label>About</ion-label>
         </ion-tab-button>
-
       </ion-tab-bar>
     </ion-tabs>
   </ion-page>
@@ -25,6 +29,6 @@
 
 <script setup>
 import { IonTabBar, IonTabButton, IonTabs, IonLabel, IonIcon, IonPage, IonRouterOutlet } from '@ionic/vue';
-import { addCircle, listOutline, informationCircle } from 'ionicons/icons';
+import { desktop, listOutline, informationCircle, home } from 'ionicons/icons';
 
 </script>

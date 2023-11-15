@@ -89,6 +89,29 @@ ion-card {
   box-shadow: 14px 18px 20px rgba(0, 0, 0, 0.786);
 }
 
+/** Home page*/
+.homeContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.homeGrid {
+  width: 60%;
+  padding: 3em;
+  display: flex;
+  justify-content: center;
+  height: 100%;
+}
+
+.homeBtn {
+  box-shadow: 2px 8px 8px rgba(4, 0, 0, 0.786);
+}
+.homeIcon {
+  font-size: 3em;
+}
+
 
 /** ion-modal*/
 .modal-wrapper {

@@ -10,22 +10,22 @@
             <ion-grid class="homeGrid">
                 <ion-row>
                     <ion-col class="ion-text-center">
-                        <ion-button class="homeBtn" expand="full" @click="navigateTo('manage')">
+                        <ion-button class="homeBtn" expand="full" href="/tabs/tabOverzicht">
                             <ion-icon class="homeIcon" :icon="desktop"></ion-icon>
                         </ion-button>
                     </ion-col>
                     <ion-col class="ion-text-center">
-                        <ion-button class="homeBtn" expand="full" @click="navigateTo('list')">
+                        <ion-button class="homeBtn" expand="full" href="/tabs/tabLijsten">
                             <ion-icon class="homeIcon" :icon="listOutline"></ion-icon>
                         </ion-button>
                     </ion-col>
                     <ion-col class="ion-text-center">
-                        <ion-button class="homeBtn" expand="full" @click="navigateTo('about')">
+                        <ion-button class="homeBtn" expand="full" href="/tabs/tabAbout">
                             <ion-icon class="homeIcon" :icon="informationCircle"></ion-icon>
                         </ion-button>
                     </ion-col>
                     <ion-col class="ion-text-center">
-                        <ion-button class="homeBtn" expand="full" @click="navigateTo('settings')">
+                        <ion-button class="homeBtn" expand="full" href="/tabs/tabOverzicht">
                             <ion-icon class="homeIcon" :icon="settings"></ion-icon>
                         </ion-button>
                     </ion-col>

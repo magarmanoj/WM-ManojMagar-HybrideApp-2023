@@ -22,6 +22,7 @@
           <ion-icon aria-hidden="true" :icon="informationCircle" />
           <ion-label>About</ion-label>
         </ion-tab-button>
+
       </ion-tab-bar>
     </ion-tabs>
   </ion-page>

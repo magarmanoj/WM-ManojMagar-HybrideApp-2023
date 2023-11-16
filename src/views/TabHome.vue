@@ -25,7 +25,7 @@
                         </ion-button>
                     </ion-col>
                     <ion-col class="ion-text-center">
-                        <ion-button class="homeBtn" expand="full" href="/tabs/tabOverzicht">
+                        <ion-button class="homeBtn" expand="full" href="/tabs/tabSetting">
                             <ion-icon class="homeIcon" :icon="settings"></ion-icon>
                         </ion-button>
                     </ion-col>
@@ -41,4 +41,6 @@ import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonGrid, IonRow, 
 import { desktop, listOutline, settings, informationCircle } from 'ionicons/icons';
 </script>
 
-<style>@import '@/theme/styles.css';</style>
+<style>
+@import '@/theme/styles.css';
+</style>

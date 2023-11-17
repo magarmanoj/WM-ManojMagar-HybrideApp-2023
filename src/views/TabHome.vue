@@ -24,11 +24,6 @@
                             <ion-icon class="homeIcon" :icon="informationCircle"></ion-icon>
                         </ion-button>
                     </ion-col>
-                    <ion-col class="ion-text-center">
-                        <ion-button class="homeBtn" expand="full" href="/tabs/tabSetting">
-                            <ion-icon class="homeIcon" :icon="settings"></ion-icon>
-                        </ion-button>
-                    </ion-col>
                 </ion-row>
             </ion-grid>
         </ion-content>

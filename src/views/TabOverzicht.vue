@@ -2,7 +2,7 @@
   <ion-page>
     <ion-header>
       <ion-toolbar>
-        <ion-title class="ion-text-center">Beheren van medewerkers en projecten</ion-title>
+        <ion-title class="ion-text-center">Beheren</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">

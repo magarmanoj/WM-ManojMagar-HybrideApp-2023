@@ -132,12 +132,12 @@ const btnOk = (toDeleteId) => {
                 isOpen.value = false;
                 getProjects();
             } else {
-                window.alert('Je kan het project niet verwijderen omdat er een serverfout is opgetreden!');
+                window.alert('Je kan het project niet verwijderen! Kijk nog of de project gelink is met de medewerkers.');
             }
         })
         .catch(error => {
             console.error('Error deleting project:', error);
-            window.alert('Je kan het project niet verwijderen omdat er een serverfout is opgetreden!');
+            window.alert('Je kan het project niet verwijderen! Kijk nog of de project gelink is met de medewerkers.');
         });
 }
 

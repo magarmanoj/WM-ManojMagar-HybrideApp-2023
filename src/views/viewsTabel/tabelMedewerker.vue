@@ -135,12 +135,12 @@ const btnOk = (toDeleteId) => {
                 getMedewerker();
 
             } else {
-                window.alert('Je kan de medewerker niet verwijderen omdat er een serverfout is opgetreden!');
+                window.alert('Je kan de medewerker niet verwijderen! Kijk nog of de medewerker gelink is met de project.');
             }
         })
         .catch(error => {
             console.error('Error deleting project:', error);
-            window.alert('Je kan de medewerker niet verwijderen omdat er een serverfout is opgetreden!');
+            window.alert('Je kan de mederwerker niet verwijderen! Kijk nog of de medewerker gelink is met de project.');
         });
 };
 

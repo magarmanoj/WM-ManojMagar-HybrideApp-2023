@@ -88,19 +88,19 @@
               <ion-col>
                 <ion-item>
                   <ion-select label="Selecteer Medewerker" label-placement="stacked" interface="popover"
-                    placeholder="Selecteer Medewerker"  v-model="selectedMedewerker">
-                    <ion-select-option v-for="{ medewerker_id, voornaam, familienaam } in medewerkers" :key="medewerker_id" :value="medewerker_id">
-                {{ voornaam }} {{ familienaam }}
-              </ion-select-option>
+                    placeholder="Selecteer Medewerker" v-model="selectedMedewerker">
+                    <ion-select-option v-for="{ medewerker_id, voornaam, familienaam } in medewerkers"
+                      :key="medewerker_id" :value="medewerker_id">
+                      {{ voornaam }} {{ familienaam }}
+                    </ion-select-option>
                   </ion-select>
                 </ion-item>
               </ion-col>
               <ion-col>
                 <ion-item>
                   <ion-select label="Selecteer Project" label-placement="stacked" interface="popover"
-                    placeholder="Selecteer Project"  v-model="selectedProject">
-                    <ion-select-option v-for="{ project_id, naam } in projects" :key="project_id"
-                      :value="project_id">
+                    placeholder="Selecteer Project" v-model="selectedProject">
+                    <ion-select-option v-for="{ project_id, naam } in projects" :key="project_id" :value="project_id">
                       {{ naam }}
                     </ion-select-option>
                   </ion-select>
@@ -191,12 +191,12 @@ const getMedewerkersAndProjects = () => {
 }
 
 
-const addMedewerker = () => {
+const addMedewerker = async () => {
   if (medewerkerNaam.value.trim() == '' || medewerkerFamilienaam.value.trim() == '' || specialisatie.value.trim() == '') {
     window.alert('Een of meerdere waardes zijn leeg!');
     return;
   }
-  axios
+  await axios
     .post('https://manojmagar.be/RESTfulAPI/Taak1/api/WerkerProjectadd.php', {
       voornaam: medewerkerNaam.value,
       familienaam: medewerkerFamilienaam.value,
@@ -217,14 +217,18 @@ const addMedewerker = () => {
       console.error('Error:', error);
       window.alert('Er is een fout opgetreden bij het toevoegen van de medewerker.');
     });
+  console.log('Fetching medewerkers and projects after adding medewerker...');
+
+  getMedewerkersAndProjects();
+
 }
 
-const addProject = () => {
+const addProject = async () => {
   if (projectNaam.value.trim() == '' || projectCode.value.trim() == '' || projectOmschrijving.value.trim() == '') {
     window.alert('Een of meerdere waardes zijn leeg!');
     return;
   }
-  axios
+  await axios
     .post('https://manojmagar.be/RESTfulAPI/Taak1/api/Projectsadd.php', {
       naam: projectNaam.value,
       code: projectCode.value,
@@ -245,14 +249,17 @@ const addProject = () => {
       console.error('Error:', error);
       window.alert('Er is een fout opgetreden bij het toevoegen van het project.');
     });
+  console.log('Fetching projects and projects after adding medewerker...');
+
+  getMedewerkersAndProjects();
 }
 
 // combobox: show all the medewerkers en voor project alle de project 
 const toewijzen = () => {
   if (!selectedMedewerker.value || !selectedProject.value) {
-  window.alert('Selecteer een medewerker en een project.');
-  return;
-}
+    window.alert('Selecteer een medewerker en een project.');
+    return;
+  }
   axios
     .post('https://manojmagar.be/RESTfulAPI/Taak1/api/ToewijzenMedeProject.php', {
       medewerker_id: selectedMedewerker.value,
@@ -272,15 +279,17 @@ const toewijzen = () => {
       console.error('Error:', error);
       window.alert('Er is een fout opgetreden bij het toevoegen.');
     });
+  getMedewerkersAndProjects();
+
 }
 
-const verwijderenProjectMedewerker = () => {
+const verwijderenProjectMedewerker = async () => {
   if (!selectedMedewerker.value || !selectedProject.value) {
     window.alert('Selecteer een medewerker en een project.');
     return;
   }
 
-  axios
+  await axios
     .post('https://manojmagar.be/RESTfulAPI/Taak1/api/VerwijderMedeProject.php', {
       medewerker_id: selectedMedewerker.value,
       project_id: selectedProject.value
@@ -299,8 +308,10 @@ const verwijderenProjectMedewerker = () => {
       console.error('Error:', error);
       window.alert('Er is een fout opgetreden bij het verwijderen.');
     });
-};
+  console.log('Fetching toewijzen and projects after adding medewerker...');
 
+  getMedewerkersAndProjects();
+};
 
 
 const verzendMedewerker = () => {
@@ -310,8 +321,6 @@ const verzendMedewerker = () => {
 const verzendProduct = () => {
   addProject();
 };
-
-
 
 const verwijderen = () => {
   verwijderenProjectMedewerker();
@@ -323,4 +332,6 @@ onMounted(() => {
 
 </script>
 
-<style>@import '@/theme/styles.css';</style>
+<style>
+@import '@/theme/styles.css';
+</style>

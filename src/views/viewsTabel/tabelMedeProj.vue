@@ -90,7 +90,7 @@ const btnOk = (toDeleteMedeId, toDeletePrID) => {
         })
         .catch(error => {
             console.error('Error deleting:', error);
-            window.alert('Je kan dit niet verwijderen omdar er een serverfout is opgetreden!');
+            window.alert('Je kan dit niet verwijderen!');
         });
 }
 

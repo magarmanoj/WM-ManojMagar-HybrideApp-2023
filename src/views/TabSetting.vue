@@ -46,8 +46,3 @@ onMounted(() => {
 
 </script>
 
-<style>
-.settingContent {
-    align-items: center;
-}
-</style>

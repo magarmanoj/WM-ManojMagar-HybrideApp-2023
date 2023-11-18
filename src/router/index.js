@@ -29,6 +29,10 @@ const routes = [
       {
         path: 'tabAbout',
         component: () => import('@/views/TabAbout.vue')
+      },
+      {
+        path: 'tabSetting',
+        component: () => import('@/views/Tabsetting.vue')
       }
     ]
   }

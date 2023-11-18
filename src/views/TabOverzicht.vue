@@ -327,8 +327,14 @@ const verwijderen = () => {
 };
 
 onMounted(() => {
+  const savedDarkMode = localStorage.getItem('darkmode');
+    if (savedDarkMode != null) {
+        const shouldAdd = savedDarkMode == 'true';
+        document.body.classList.toggle('dark', shouldAdd);
+    }
   getMedewerkersAndProjects();
 });
+
 
 </script>
 

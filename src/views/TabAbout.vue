@@ -41,6 +41,15 @@
   
 <script setup>
 import { IonPage, IonHeader, IonToolbar, IonTitle, IonContent, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonGrid, IonRow, IonImg, IonCol, IonLabel } from '@ionic/vue';
+import {onMounted} from 'vue';
+
+onMounted(() => {
+    const savedDarkMode = localStorage.getItem('darkmode');
+    if (savedDarkMode != null) {
+        const shouldAdd = savedDarkMode == 'true';
+        document.body.classList.toggle('dark', shouldAdd);
+    }
+});
 </script>
   
 <style>

@@ -27,7 +27,7 @@
 </template>
   
 <script setup>
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import {IonPage, IonHeader, IonToolbar, IonTitle, IonContent,IonGrid, IonRow, IonCol, IonButton } from '@ionic/vue';
 import TabelMedewerker from './viewsTabel/tabelMedewerker.vue';
 import TabelProject from './viewsTabel/tabelProject.vue';
@@ -42,6 +42,14 @@ const toggleTable = (table) => {
     toonProjectLijst.value = table == 'project' ? !toonProjectLijst.value : false;
     toonMedeProjLijst.value = table == 'medeProj' ? !toonMedeProjLijst.value : false;
 };
+
+onMounted(() => {
+    const savedDarkMode = localStorage.getItem('darkmode');
+    if (savedDarkMode != null) {
+        const shouldAdd = savedDarkMode == 'true';
+        document.body.classList.toggle('dark', shouldAdd);
+    }
+});
 </script>
   
 <style>

@@ -16,4 +16,4 @@ const darkmode = ref(false);
 (toggle werkt met local dus kan niet updaten met user preference).
 
 IK HEB BEIDE VERSION VIDEO GEZET.
-MET local en met user preference.
+MET local (DEMO>EXTRA) en met user preference (DEMO- lightmode en darkmode).
